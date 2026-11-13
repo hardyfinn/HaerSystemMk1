@@ -1,7 +1,7 @@
 {
   "slug": "Codex",
   "name": "Codex",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "license": "GPL-3.0-or-later",
   "brand": "Haer",
   "author": "Haer",
@@ -14,10 +14,23 @@
   "changelogUrl": "",
   "modules": [
     {
-      "slug": "Blank",
-      "name": "Codex Blank",
-      "description": "Placeholder blank panel from milestone 0. It shows that the plugin loads.",
-      "tags": ["Blank"]
+      "slug": "Warp",
+      "name": "WARP",
+      "description": "Curved master clock: tempo that drifts, bars that bend, four related phase outputs",
+      "tags": [
+        "Clock generator",
+        "Random"
+      ]
+    },
+    {
+      "slug": "Contour",
+      "name": "CONTOUR",
+      "description": "Rhythms where a curve crosses levels, with an 8-phasor interference source. Runs from a phase ramp or free, up to audio rate",
+      "tags": [
+        "Sequencer",
+        "Clock generator",
+        "Polyphonic"
+      ]
     }
   ]
 }

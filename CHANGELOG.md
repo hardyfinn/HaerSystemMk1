@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.1.0, milestone M1 (2026-11-13)
+
+The time layer. First modules you can patch and hear.
+
+- **WARP** (24 HP): master clock sending phase ramps. Tempo drift, five bar-bending shapes including a new random bend every bar and one you draw on the screen, four outputs with their own ratio, offset and follow, bar and beat triggers, tempo CV out.
+- **CONTOUR** (28 HP): triggers where a curve crosses levels. Curve from four harmonics, from eight beating phasors (MOIRE, with coincidence triggers) or from any CV. Poly triggers and velocities. Runs from WARP's phase or from its own RATE up to audio rate.
+- KEEP and RECALL with 8 slots on both modules.
+- The placeholder "Codex Blank" is gone.
+- 15 new unit tests (36 in all).
+
 ## 2.0.0, milestone M0 (2026-11-13)
 
 Nothing to hear yet. This milestone is the foundation the 13 modules are built on.

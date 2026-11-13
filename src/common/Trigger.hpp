@@ -54,3 +54,48 @@ struct TriggerOut {
 };
 
 } // namespace codex
+
+namespace codex {
+
+// A trigger output that still works at audio rate. A normal hit gives the
+// standard 1 ms pulse. When hits come faster than that, each pulse lasts half
+// the gap to the hit before it, and a pulse that is still high drops for one
+// sample before the next one starts. So every hit is a separate rising edge
+// and fast hits become a pitched pulse train instead of one stuck-high gate.
+struct AdaptiveTrigger {
+	static const int CH = 16;
+	float remaining[CH] = {};
+	float sinceLast[CH];
+	bool dip[CH] = {};
+
+	AdaptiveTrigger() { reset(); }
+	void reset() {
+		for (int c = 0; c < CH; c++) {
+			remaining[c] = 0.f;
+			sinceLast[c] = 1.f;
+			dip[c] = false;
+		}
+	}
+	void fire(int c) {
+		dip[c] = remaining[c] > 0.f;
+		float len = sinceLast[c] * 0.5f;
+		remaining[c] = len < 1e-3f ? len : 1e-3f;
+		sinceLast[c] = 0.f;
+	}
+	// Call once per sample per channel, after any fire() for this sample.
+	float process(int c, float sampleTime) {
+		if (sinceLast[c] < 1.f)
+			sinceLast[c] += sampleTime;
+		if (dip[c]) {
+			dip[c] = false;
+			return 0.f;
+		}
+		if (remaining[c] > 0.f) {
+			remaining[c] -= sampleTime;
+			return 10.f;
+		}
+		return 0.f;
+	}
+};
+
+} // namespace codex

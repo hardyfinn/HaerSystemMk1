@@ -4,5 +4,6 @@ Plugin* pluginInstance;
 
 void init(Plugin* p) {
 	pluginInstance = p;
-	p->addModel(modelBlank);
+	p->addModel(modelWarp);
+	p->addModel(modelContour);
 }

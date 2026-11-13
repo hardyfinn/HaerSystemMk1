@@ -14,9 +14,9 @@ The plugin is built in milestones (§15 of the spec). See [`CHANGELOG.md`](CHANG
 
 | Milestone | Contents | State |
 |---|---|---|
-| M0 | Scaffold, shared code, tests, placeholder panel | built |
-| M1 | WARP + CONTOUR | next |
-| M2 | MUTATE | |
+| M0 | Scaffold, shared code, tests | built |
+| M1 | WARP + CONTOUR | built, waiting for Haer's check |
+| M2 | MUTATE | next |
 | M3 | STRIKE + FMX | |
 | M4 | CHAIN | |
 | M5 | SPLICE + DEPTH | |

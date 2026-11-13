@@ -1,7 +1,7 @@
 {
   "slug": "Codex",
   "name": "Codex",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "license": "GPL-3.0-or-later",
   "brand": "Haer",
   "author": "Haer",
@@ -40,6 +40,27 @@
         "Sequencer",
         "Drum",
         "Random",
+        "Polyphonic"
+      ]
+    },
+    {
+      "slug": "Strike",
+      "name": "STRIKE",
+      "description": "Modal percussion: 32 tuned resonators that morph from wood to rubber, metal, glass and drum skin, plus a vowel (formant) mode. Up to 8 voices",
+      "tags": [
+        "Drum",
+        "Physical modeling",
+        "Polyphonic",
+        "Synth voice"
+      ]
+    },
+    {
+      "slug": "Fmx",
+      "name": "FMX",
+      "description": "Four-operator FM voice whose loudness and brightness follow a phase ramp or a trigger, up to audio-rate retriggering. Up to 8 voices",
+      "tags": [
+        "Synth voice",
+        "Oscillator",
         "Polyphonic"
       ]
     }

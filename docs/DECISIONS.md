@@ -56,3 +56,40 @@ Places where the build spec (`docs/design/03-build-instructions.md`) was ambiguo
 14. **Screen editing:** click a step to turn it on or off; drag up or down on a step to set its velocity; click past a track's end to lengthen it, or drag the bright end line; click a track label to mute; right-click a label for its style. Changing a track's style rewrites that track. Ratchets, micro-timing and conditions are shown but not edited by hand: §5 makes hand editing optional and Haer prefers steering to editing.
 15. **KEEP stores** the playing pattern, the home pattern and the 16 musical knobs (STEPS to SWING).
 16. **Not in the spec:** right-click, "Write this track afresh", which regenerates a single track from the current seed and density.
+
+## M3: STRIKE and FMX
+
+### STRIKE
+
+1. **Panel width.** STRIKE is 20 HP (spec: 12) for 12 knobs and 13 jacks with full-size labels. It has no screen; the spec does not ask for one.
+2. **Bar ratios after the fifth.** §8 gives 1, 2.756, 5.404, 8.933, 13.34 and then "(2n+1)² × 0.5513", which does not continue that series (it would jump to 66). The series is carried on with its own rule, (2k+3)² / 9.066, giving 18.64, 24.82 and so on.
+3. **Glass ratios after the fifth** follow the same curve as the five in the spec: 0.91 × (k+1)^1.45.
+4. **DECAY is the ring time of the lowest mode in metal.** Other materials ring for a fixed fraction of it (wood 12 %, rubber 5 %, glass 80 %, drum skin 35 %), which is what makes MATERIAL sound like a change of material and not only of tuning. Blends between materials are smooth.
+5. **Resonators** are the "recursive oscillator" option of §8, in the rotating form whose loudness does not jump when the pitch or material is changed while it rings. They are written as plain loops the compiler turns into 4-at-a-time code, so the engine stays free of Rack and can be unit tested.
+6. **Level.** Each hit is scaled so that sparse and dense materials come out about equally loud, and the output is rounded off smoothly above 6 V so it can never pass 10 V. Hard hits on drum skin reach that rounding; turn the velocity down for a cleaner tone.
+7. **POSITION** never quite reaches either end (3 % to 97 % of the length), because at the very end the formula gives silence.
+8. **Noise exciter length** (1 to 50 ms) has no knob in the spec, so it follows HARD: hard = short and bright, soft = long and dull. The noise is the same every hit, so hits are repeatable.
+9. **Exciter loudness.** Click, mallet and noise are matched for the energy they put in. A soft mallet on a high pitch is very quiet: that is the physics (a pillow on a triangle), not a fault.
+10. **External exciter.** With TRIG patched, each trigger opens a short window on the EXCITE audio (4 to 200 ms, set by HARD). With nothing in TRIG, the audio feeds the resonators all the time, so STRIKE can be used as a resonator effect.
+11. **Choke on retrigger** fades the old ringing over 5 ms in a second set of resonators while the new hit starts at once in the first, so the new hit is not delayed or dulled.
+12. **BURST** hits are all the same strength.
+13. **CV scaling** (the spec gives none, and there are no attenuverters): MATERIAL 10 V = two materials; POSITION 10 V = half the length; DAMP and BRIGHT 10 V = full range; DECAY 2 V = double. Chosen so MUTATE's 0 to 10 V locks give "slightly different" hits as the checklist asks. Knobs and CVs are read 6000 times a second and afresh on every hit.
+14. **Formant mode.** Vowel tables are the bass-voice tables from the Csound manual. The pulse is measured per cycle so all pitches are about equally loud. The voice sounds while TRIG is high, with a 5 ms attack and a release set by DECAY. HARD is the open quotient, INHARM the size, as §8 says.
+15. **L and R** use a balance law: with SPREAD at 0 every voice is equally in both; at full, voice 1 is hard left and the last voice hard right.
+
+### FMX
+
+16. **Panel width.** FMX is 24 HP (spec: 14) for the 16 operator knobs, 7 main knobs, 17 jacks and the algorithm screen.
+17. **Algorithm 5.** §9 writes it as "(4→3)+(2)→1", which is the same wiring as algorithm 6. So that there are eight different algorithms, 5 is: operator 4 feeds both 3 and 2, and those two feed 1.
+18. **Level and ENV.** For an operator you hear, LEVEL is loudness; for one that modulates, LEVEL × INDEX is the depth in radians. ENV shapes both kinds with the tone curve.
+19. **Feedback** at full is 2 radians.
+20. **Nothing patched to TRIG or PHASE:** FMX sounds continuously, like an oscillator, so it can be tuned and used as a drone. Patch TRIG and it is silent until the first trigger.
+21. **PHASE patched:** TRIG and TIME are ignored. Each time the ramp wraps counts as a hit (velocity is read, and phases reset if that option is on). A ramp that runs backwards plays the envelope backwards.
+22. **Attack.** Loudness is smoothed over a fifth of a millisecond so the instant attack does not click; this is far shorter than one cycle of a 2 kHz retrigger.
+23. **Pitch.** There is no pitch knob in the spec: 0 V is middle C and the V/OCT input does the rest. An octave switch would be handy for basses; not added because the spec does not have one. Say if you want it.
+24. **Ratio CV with snap on** moves through whole numbers and halves, like the knob (and 0.25 at the very bottom).
+25. **Labels.** AMP SHAPE and INDEX SHAPE are lettered AMP and TONE on the panel to fit the label size.
+26. **OP 1 to 4 outputs** follow each operator's LEVEL and ENV but not the loudness envelope, so they keep running between notes.
+27. **L and R** are limited at 12 V. Eight loud voices can reach that; lower the levels or use the POLY output into a mixer.
+28. **CPU.** 2× oversampling with a 31-point half-band filter. Eight voices measured about 3 % of one core on the build server, so one to four voices fit the 1.5 % budget; a full eight-voice chord will be over it on a 2020 laptop.
+

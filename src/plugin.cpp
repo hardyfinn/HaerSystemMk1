@@ -7,4 +7,6 @@ void init(Plugin* p) {
 	p->addModel(modelWarp);
 	p->addModel(modelContour);
 	p->addModel(modelMutate);
+	p->addModel(modelStrike);
+	p->addModel(modelFmx);
 }

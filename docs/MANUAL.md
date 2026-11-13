@@ -114,3 +114,70 @@ One page per module will be added here as each milestone lands (final version at
 1. Start with AMT at 50 % and DRIFT at 50 %: the beat keeps changing but stays itself. When it lands somewhere you love, press SET and that becomes the new centre it wanders around.
 2. Patch LOCK A (through a Split) to a drum voice's tone or decay CV: because the locks follow smooth curves across the track, the sound changes in shapes, and the LOCK rule slowly reshapes them.
 3. Turn ROTATE and COPY down and RATCH and NUDGE up for a beat whose hits stay put while its feel keeps shifting; do the opposite for patterns that slide and trade places.
+
+## STRIKE: modal percussion (20 HP)
+
+**What it is for.** A struck object: something hits it (the top row of knobs) and it rings (the other two rows). One knob, MATERIAL, takes it from woodblock through rubber, metal bar and glass to a drum skin. Patch a poly cable of triggers and it plays up to 8 voices at once.
+
+| Control | What it does |
+|---|---|
+| EXCITER | What hits it. 0 a click, 1 a mallet, 2 a burst of noise, 3 the audio at the EXCITE jack. In-between settings blend two neighbours. |
+| HARD | Hard and bright to the right, soft and dull to the left. For noise it also shortens the burst. |
+| BURST | Hits per trigger, 1 to 16. More than 1 turns each hit into a rattle or roll. |
+| RATE | How fast the burst's hits follow each other, 2 to 200 Hz. |
+| MODE | MODAL: a struck object. FORMANT: a voice (see below). |
+| PITCH | Pitch of the lowest mode, 20 Hz to 5 kHz. V/OCT adds to it. |
+| MATERIAL | Wood, rubber, metal, glass, drum skin, and everything between. |
+| DECAY | How long it rings. The figure is for metal; wood and rubber ring much shorter. |
+| DAMP | How much sooner the high modes die than the low ones. |
+| BRIGHT | Balance of low and high modes. |
+| INHARM | Squeezes (left) or stretches (right) the modes apart: detunes the "chord" inside the sound. |
+| POS | Where it is struck. Near an end: full and bright. Middle: hollow. |
+| SPREAD | Spreads the voices from left to right. |
+
+**FORMANT mode.** TRIG becomes a gate: while it is high a voice sings at PITCH; when it drops, the voice fades over DECAY. MATERIAL picks the vowel (a, e, i, o, u), INHARM the size of the mouth (child to giant), HARD how breathy or pressed the voice is.
+
+**Inputs.** TRIG, VEL, V/OCT (all poly: one voice per channel). MATER, DECAY, POS, DAMP, BRIGHT CVs (a poly cable gives each voice its own value; they are read at every hit). EXCITE (audio for exciter 3). CHOKE (a trigger silences the ringing in 5 ms).
+
+**Outputs.** L and R (stereo mix), POLY (each voice on its own channel).
+
+**Right-click.** "Choke on retrigger": a new hit cuts off the last one, like a hand damping the bar. Good for tight, dry patterns; leave it off for ringing bells.
+
+**Three tips**
+1. MUTATE's GATES into TRIG, VEL into VEL, LOCK A into MATER and LOCK B into POS: eight different-sounding drums from one STRIKE, each changing step by step.
+2. With nothing in TRIG and EXCITER at 3, STRIKE is a tuned resonator for any audio at EXCITE: try a drum loop or noise.
+3. BURST at 4 to 8 with RATE around 40 Hz and a short DECAY gives ruffs and rattles; push RATE past 100 Hz and the burst becomes a buzzy pitch of its own.
+
+## FMX: FM voice shaped by phase (24 HP)
+
+**What it is for.** FM basses, bells and metallic tones. Four sine "operators" are wired so that some are heard and others bend the ones that are heard. One envelope runs through each note and controls both loudness and brightness; patch a phase ramp and the envelope follows that ramp exactly, so the sound opens and closes with WARP's bent time.
+
+**Screen.** Top: the wiring. Signal flows downward; filled boxes are the operators you hear; the loop on operator 4 lights when FB is up. Bottom: the loudness curve (bright) and the tone curve (dim) across one note, with a line showing where voice 1 is.
+
+| Control | What it does |
+|---|---|
+| RATIO 1 to 4 | Each operator's pitch as a multiple of the note. Snaps to whole numbers and halves; right-click the panel to free an operator. |
+| FINE 1 to 4 | ±50 cents. A few cents on an operator you hear gives slow beating. |
+| LEVEL 1 to 4 | Loudness for an operator you hear; modulation depth for the others. |
+| ENV 1 to 4 | How much that operator's level falls away through the note, following the TONE curve. 0 = steady. |
+| ALGO | The wiring, 1 to 8. 1 is a chain (the harshest), 8 is four plain sines (an organ). |
+| INDEX | Overall modulation depth: 0 is pure, 10 is very bright. |
+| FB | Operator 4 modulating itself: towards a saw wave, then noise. |
+| TIME | Length of the note after a trigger, 2 ms to 8 s. Not used when PHASE is patched. |
+| AMP | Shape of the loudness curve. Left: stays loud then drops. Right: falls away at once. |
+| TONE | The same for brightness. Right = a short bright pluck at the start. |
+| SPREAD | Spreads the voices from left to right. |
+
+**How notes start.** Nothing in TRIG or PHASE: it sounds all the time. TRIG patched: each trigger starts a note that lasts TIME. PHASE patched: the note follows the ramp, one note per cycle.
+
+**Inputs.** V/OCT (0 V = middle C), TRIG, PHASE, VEL (all poly, up to 8 voices). INDEX (1 V = 1). R2, R3, R4: ratio of operators 2 to 4 (1 V = +1). FB. ALGO (0 to 10 V steps through the eight).
+
+**Outputs.** L, R, POLY. OP 1 to OP 4: each operator of voice 1 on its own, for use as extra oscillators or modulation.
+
+**Right-click.** Snap on or off per operator. "Reset operator phases on trigger": every hit starts identically; at audio-rate triggers this gives hard, buzzy tones.
+
+**Three tips**
+1. Bass: ALGO 1, ratios 1 / 1 / 2 / 3, TONE well to the right, TIME about 300 ms. INDEX is your "filter" knob.
+2. Bell: ALGO 3, operator 2 ratio 3.5 and operator 4 ratio 7 (or free them for clangs), TIME 3 s, AMP in the middle.
+3. WARP PHASE 2 into PHASE and a sequencer into V/OCT: the timbre breathes with the bar, and bends when you raise WARP's DEPTH.
+

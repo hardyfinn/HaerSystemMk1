@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.3.0, milestone M3 (2026-11-13)
+
+Our own voices.
+
+- **STRIKE** (20 HP): struck percussion built from 32 tuned resonators per voice. MATERIAL morphs wood, rubber, metal, glass and drum skin. Four exciters (click, mallet, noise burst, external audio) that blend into each other, BURST for rattles and rolls, strike position, damping, brightness, inharmonic stretch, choke. A formant mode turns it into a held vowel voice. Up to 8 voices, stereo spread, poly out.
+- **FMX** (24 HP): four-operator FM voice with 8 algorithms shown on its screen. One envelope position drives both loudness and brightness; it follows a phase ramp from WARP or CONTOUR when PHASE is patched, otherwise a trigger and TIME. Retriggers cleanly up to audio rate. Ratio snapping per operator, feedback, CV over ratios, index, feedback and algorithm. Up to 8 voices, plus each operator of voice 1 on its own jack.
+- 21 new unit tests (70 in all).
+
 ## 2.2.0, milestone M2 (2026-11-13)
 
 First real beats.

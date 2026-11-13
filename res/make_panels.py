@@ -62,7 +62,8 @@ def text(s, x, y, size, font=FONT_BOLD, fill=TEXT, anchor="middle", spacing=0.06
 
 
 # Sizes of the standard Rack parts, in mm (radius), for the overlap check.
-PART_R = {"knob": 5.1, "small": 4.1, "trim": 3.1, "jack": 4.2, "button": 3.1, "switch3": (2.6, 5.0), "light": 1.1}
+PART_R = {"knob": 5.1, "small": 4.1, "trim": 3.1, "jack": 4.2, "button": 3.1, "switch3": (2.6, 5.0), "switch2": (2.6, 4.0),
+          "light": 1.1}
 
 
 class Panel:
@@ -162,6 +163,9 @@ class Panel:
                 elif kind == "switch3":
                     extra.append(f'<rect x="{x - 2.3}" y="{y - 4.8}" width="4.6" height="9.6" rx="0.8" fill="#333"/>'
                                  f'<rect x="{x - 1.6}" y="{y - 4.2}" width="3.2" height="3.2" fill="#ccc"/>')
+                elif kind == "switch2":
+                    extra.append(f'<rect x="{x - 2.3}" y="{y - 3.8}" width="4.6" height="7.6" rx="0.8" fill="#333"/>'
+                                 f'<rect x="{x - 1.6}" y="{y - 3.2}" width="3.2" height="3.2" fill="#ccc"/>')
                 elif kind == "light":
                     extra.append(f'<circle cx="{x}" cy="{y}" r="{r}" fill="#5a4a20"/>')
         svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{self.w * 8:.0f}" height="{H * 8:.0f}" '
@@ -348,7 +352,83 @@ def mutate():
     p.save()
 
 
+def strike():
+    p = Panel("Strike", 20, "STRIKE", TEAL, "modal percussion")
+    xs = [12.0 + i * 19.4 for i in range(5)]
+    y1, y2, y3 = 30.0, 54.0, 78.0
+
+    # what hits it
+    knob_row(p, y1, [("EXCITER", "EXCITER", xs[0]), ("HARD", "HARD", xs[1]), ("BURST", "BURST", xs[2]),
+                     ("RATE", "RATE", xs[3])])
+    p.line(xs[0] - 5, y1 - 12.4, xs[3] + 5, y1 - 12.4, TEAL, 0.35)
+    p.note("CLICK  MALLET  NOISE  EXT", xs[0] - 5.0, y1 + 8.6, anchor="start")
+    p.place("MODE", "switch2", (82.0, y1))
+    p.label("MODE", 87.5, y1 - KNOB_LABEL)
+    p.note("MODAL", 86.0, y1 - 1.6, anchor="start")
+    p.note("FORMANT", 86.0, y1 + 3.0, anchor="start", fill=TEAL)
+
+    # what rings
+    knob_row(p, y2, [("PITCH", "PITCH", xs[0]), ("MATERIAL", "MATERIAL", xs[1]), ("DECAY", "DECAY", xs[2]),
+                     ("DAMP", "DAMP", xs[3]), ("BRIGHT", "BRIGHT", xs[4])])
+    knob_row(p, y3, [("INHARM", "INHARM", xs[0]), ("POSITION", "POS", xs[1]), ("SPREAD", "SPREAD", xs[2])])
+    # what MATERIAL means in each mode
+    lx = 63.0
+    p.note("MATERIAL, LEFT TO RIGHT", lx, y3 - 6.0, anchor="start", fill=TEXT)
+    p.note("WOOD  RUBBER  METAL", lx, y3 - 2.0, anchor="start")
+    p.note("GLASS  DRUM SKIN", lx, y3 + 1.6, anchor="start")
+    p.note("FORMANT:  A  E  I  O  U", lx, y3 + 5.8, anchor="start", fill=TEAL)
+
+    ix = [10.0 + i * 13.6 for i in range(7)]
+    jack_row(p, JACKS_1, [("TRIG_IN", "TRIG", ix[0]), ("VEL_IN", "VEL", ix[1]), ("VOCT_IN", "V/OCT", ix[2]),
+                          ("MATERIAL_IN", "MATER", ix[3]), ("DECAY_IN", "DECAY", ix[4]), ("POSITION_IN", "POS", ix[5]),
+                          ("DAMP_IN", "DAMP", ix[6])])
+    jack_row(p, JACKS_2, [("BRIGHT_IN", "BRIGHT", ix[0]), ("EXCITE_IN", "EXCITE", ix[1]), ("CHOKE_IN", "CHOKE", ix[2])])
+    p.outbox(ix[4] - 7.5, JACKS_2 - 9.2, p.w - 3.0 - (ix[4] - 7.5), 14.6)
+    jack_row(p, JACKS_2, [("L_OUT", "L", ix[4]), ("R_OUT", "R", ix[5]), ("POLY_OUT", "POLY", ix[6])], fill=TEAL)
+    p.save()
+
+
+def fmx():
+    p = Panel("Fmx", 24, "FMX", TEAL, "FM voice shaped by phase")
+    p.screen("DISPLAY", 5.0, 15.0, 40.0, 40.0)
+
+    # the four operators
+    hx = [72.0, 86.0, 100.0, 114.0]
+    hy = [25.5, 36.0, 46.5, 57.0]
+    for i, x in enumerate(hx):
+        p.label(str(i + 1), x, 19.0, fill=TEAL)
+    for label, y in zip(("RATIO", "FINE", "LEVEL", "ENV"), hy):
+        p.label(label, 49.5, y + 1.2, anchor="start")
+    p.place("RATIO", "small", [(x, hy[0]) for x in hx])
+    p.place("FINE", "small", [(x, hy[1]) for x in hx])
+    p.place("LEVEL", "small", [(x, hy[2]) for x in hx])
+    p.place("ENV", "small", [(x, hy[3]) for x in hx])
+
+    ya = 77.0
+    xs = [11.0 + i * 16.65 for i in range(7)]
+    knob_row(p, ya, [("ALGO", "ALGO", xs[0]), ("INDEX", "INDEX", xs[1]), ("FEEDBACK", "FB", xs[2]),
+                     ("TIME", "TIME", xs[3]), ("AMP_SHAPE", "AMP", xs[4]), ("INDEX_SHAPE", "TONE", xs[5]),
+                     ("SPREAD", "SPREAD", xs[6])])
+    # TIME, AMP and TONE are the envelope: how long, and how fast loudness and brightness fall
+    p.line(xs[3] - 5, ya - 12.4, xs[5] + 5, ya - 12.4, TEAL, 0.35)
+
+    ix = [10.0 + i * 11.32 for i in range(10)]
+    jack_row(p, JACKS_1, [("VOCT_IN", "V/OCT", ix[0]), ("TRIG_IN", "TRIG", ix[1]), ("PHASE_IN", "PHASE", ix[2]),
+                          ("VEL_IN", "VEL", ix[3]), ("INDEX_IN", "INDEX", ix[4]), ("RATIO2_IN", "R2", ix[5]),
+                          ("RATIO3_IN", "R3", ix[6]), ("RATIO4_IN", "R4", ix[7]), ("FEEDBACK_IN", "FB", ix[8]),
+                          ("ALGO_IN", "ALGO", ix[9])])
+    p.outbox(3.0, JACKS_2 - 9.2, p.w - 6.0, 14.6)
+    ox = [11.0 + i * 16.65 for i in range(7)]
+    jack_row(p, JACKS_2, [("L_OUT", "L", ox[0]), ("R_OUT", "R", ox[1]), ("POLY_OUT", "POLY", ox[2])], fill=TEAL)
+    p.place("OP_OUT", "jack", [(ox[3 + i], JACKS_2) for i in range(4)])
+    for i in range(4):
+        p.label("OP " + str(i + 1), ox[3 + i], JACKS_2 - JACK_LABEL_DY, jack=True, fill=TEAL)
+    p.save()
+
+
 if __name__ == "__main__":
     warp()
     contour()
     mutate()
+    strike()
+    fmx()

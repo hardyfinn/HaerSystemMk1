@@ -9,3 +9,5 @@ extern Plugin* pluginInstance;
 extern Model* modelWarp;
 extern Model* modelContour;
 extern Model* modelMutate;
+extern Model* modelStrike;
+extern Model* modelFmx;

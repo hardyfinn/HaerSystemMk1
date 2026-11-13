@@ -1,7 +1,7 @@
 {
   "slug": "Codex",
   "name": "Codex",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "license": "GPL-3.0-or-later",
   "brand": "Haer",
   "author": "Haer",
@@ -29,6 +29,17 @@
       "tags": [
         "Sequencer",
         "Clock generator",
+        "Polyphonic"
+      ]
+    },
+    {
+      "slug": "Mutate",
+      "name": "MUTATE",
+      "description": "8-track step drum sequencer that writes its own patterns and slowly rewrites them: ratchets, micro-timing, conditions, per-step sound locks, polymeter",
+      "tags": [
+        "Sequencer",
+        "Drum",
+        "Random",
         "Polyphonic"
       ]
     }

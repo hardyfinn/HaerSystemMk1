@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.2.0, milestone M2 (2026-11-13)
+
+First real beats.
+
+- **MUTATE** (38 HP): 8-track step drum sequencer. Writes its own patterns from a seed, a density and a style per track (kick, snare, hat, perc, texture, free). Seven mutation rules rewrite the pattern on bar lines; DRIFT sets whether changes wander off or return to a saved home pattern. Rolls with a speed-up or slow-down curve, micro-timing, swing, play conditions, two sound locks per step, different track lengths. Runs from WARP's phase or from an ordinary clock. Grid screen with optional hand editing. KEEP and RECALL.
+- 13 new unit tests (49 in all).
+
 ## 2.1.0, milestone M1 (2026-11-13)
 
 The time layer. First modules you can patch and hear.

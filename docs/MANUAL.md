@@ -80,3 +80,37 @@ One page per module will be added here as each milestone lands (final version at
 1. Start with AMP 1 up and the rest down: a single sine gives an even pulse. Bring in harmonic 2 or 3 and listen to hits bunch where the curve steepens.
 2. Set CHANS to 4 and split TRIG to four drum voices: low levels play one voice, high levels another, so the curve's height becomes instrumentation.
 3. Patch any LFO or envelope to EXT in EXT mode: every CV in your rack can be turned into rhythm.
+
+## MUTATE: step drums that rewrite themselves (38 HP)
+
+**What it is for.** MUTATE writes an 8-track drum pattern for you, then keeps changing it a little at a time. You steer how fast it changes and how far it may stray; you never have to enter a step. Each track can have its own length, so tracks slide against each other.
+
+**Screen.** Eight rows, one per track, up to 64 steps. A lit step plays; brighter = louder. Small dots along the top of a step = a roll (one dot per hit). A tick at the bottom = the hit is early (left) or late (right). A cut-off corner = the step only plays sometimes. The white outline is the playhead. The bright line marks each track's end. The violet bar at the far right shows how far that track has drifted from home. The label at the left is the track number and its style (K kick, S snare, H hat, P perc, T texture, F free).
+
+**Editing on the screen (all optional).** Click a step to turn it on or off. Drag up or down on a step for velocity. Click past the end of a track to make it longer, or drag the end line. Click a label to mute the track. Right-click a label to choose the track's style or have just that track written afresh.
+
+| Control | What it does |
+|---|---|
+| STEPS | Steps per bar, 4 to 32. |
+| DENS | How busy a generated pattern is. Press GEN to hear a change. |
+| SEED | Same seed and density give the same pattern and the same mutations. |
+| GEN | Writes a new pattern for all 8 tracks from their styles. It becomes the home pattern. |
+| EVERY | Bars between rounds of changes, 1 to 16. |
+| AMT | How many changes per round: 0 = none, full = four. |
+| DRIFT | Where the changes head. 0: every change is a step back toward home. 50 %: it wanders around home without leaving. 100 %: it wanders off freely. |
+| HOME | Snap back to the home pattern at the next bar. |
+| SET | Make what is playing now the new home. |
+| CURVE | Shape of rolls. Left: they speed up. Centre: even. Right: they slow down. |
+| DECAY | How much each hit of a roll fades. |
+| SWING | Delays every second step, up to half a step. |
+| ROTATE, NUDGE, RATCH, THIN, MIRROR, COPY, LOCK | How often each kind of change is chosen. Turn one fully down to rule it out. ROTATE shifts a track by a step. NUDGE pushes a hit early or late. RATCH turns a hit into a roll or back. THIN removes or adds a hit. MIRROR reverses a short section. COPY borrows a section from another track. LOCK walks the sound locks of a few steps. |
+| KEEP / RECALL / SLOTS | Stores the pattern, its home and the knobs in one of 8 slots; a trigger at RECALL brings back the chosen slot on the next bar. |
+
+**Inputs.** PHASE (from WARP; one cycle = one bar). CLOCK (one pulse = one step, used when PHASE is empty). RESET. GEN, MUTATE (one extra round of changes at the next bar), HOME (triggers). DENS, AMT, DRIFT (±5 V). MICRO (±5 V shifts every hit by up to half a step: patch a slow curve for push and pull). SEED, KEEP, RECALL.
+
+**Outputs.** 1 to 8: a trigger per track. GATES: all eight on one poly cable. VEL: velocity per track (poly, 0 to 10 V, held from each hit). LOCK A and LOCK B: two per-step values per track (poly, 0 to 10 V, held from each hit) for changing a voice's sound step by step. ACCENT: a trigger whenever any hit is louder than 80 %.
+
+**Three tips**
+1. Start with AMT at 50 % and DRIFT at 50 %: the beat keeps changing but stays itself. When it lands somewhere you love, press SET and that becomes the new centre it wanders around.
+2. Patch LOCK A (through a Split) to a drum voice's tone or decay CV: because the locks follow smooth curves across the track, the sound changes in shapes, and the LOCK rule slowly reshapes them.
+3. Turn ROTATE and COPY down and RATCH and NUDGE up for a beat whose hits stay put while its feel keeps shifting; do the opposite for patterns that slide and trade places.

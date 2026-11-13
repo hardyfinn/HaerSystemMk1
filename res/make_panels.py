@@ -308,6 +308,47 @@ def contour():
     p.save()
 
 
+def mutate():
+    p = Panel("Mutate", 38, "MUTATE", AMBER, "step drums that rewrite themselves")
+    p.screen("DISPLAY", 5.0, 15.0, p.w - 10.0, 36.0)
+
+    ya, yb = 68.0, 86.0
+    xa = [11.5 + i * 15.45 for i in range(12)]
+    knob_row(p, ya, [("STEPS", "STEPS", xa[0]), ("DENSITY", "DENS", xa[1]), ("SEED", "SEED", xa[2])])
+    knob_row(p, ya, [("GENERATE", "GEN", xa[3])], kind="button")
+    knob_row(p, ya, [("EVERY", "EVERY", xa[4]), ("AMOUNT", "AMT", xa[5]), ("DRIFT", "DRIFT", xa[6])])
+    knob_row(p, ya, [("HOME", "HOME", xa[7]), ("HOME_SET", "SET", xa[8])], kind="button")
+    knob_row(p, ya, [("CURVE", "CURVE", xa[9]), ("DECAY", "DECAY", xa[10]), ("SWING", "SWING", xa[11])])
+    # three groups: make a pattern, mutate it, ratchet and swing feel
+    for a, b in ((0, 3), (4, 8), (9, 11)):
+        p.line(xa[a] - 5, ya - 12.4, xa[b] + 5, ya - 12.4, AMBER, 0.35)
+
+    # how often each mutation rule is picked
+    rules = ["ROTATE", "NUDGE", "RATCH", "THIN", "MIRROR", "COPY", "LOCK"]
+    xr = [11.5 + i * 15.45 for i in range(7)]
+    p.place("RULE", "trim", [(x, yb) for x in xr])
+    for name, x in zip(rules, xr):
+        p.label(name, x, yb - KNOB_LABEL, fill=AMBER)
+    knob_row(p, yb, [("KEEP", "KEEP", 127.0)], kind="button")
+    knob_row(p, yb, [("RECALL", "RECALL", 142.5)], kind="small")
+    slot_lights(p, 156.0, yb)
+
+    ix = [9.5 + i * 14.5 for i in range(13)]
+    names = [("PHASE_IN", "PHASE"), ("CLOCK_IN", "CLOCK"), ("RESET_IN", "RESET"), ("GENERATE_IN", "GEN"),
+             ("MUTATE_IN", "MUTATE"), ("HOME_IN", "HOME"), ("DENSITY_IN", "DENS"), ("AMOUNT_IN", "AMT"),
+             ("DRIFT_IN", "DRIFT"), ("MICRO_IN", "MICRO"), ("SEED_IN", "SEED"), ("KEEP_IN", "KEEP"),
+             ("RECALL_IN", "RECALL")]
+    jack_row(p, JACKS_1, [(n, l, x) for (n, l), x in zip(names, ix)])
+    p.outbox(3.0, JACKS_2 - 9.2, p.w - 6.0, 14.6)
+    p.place("GATE_OUT", "jack", [(ix[i], JACKS_2) for i in range(8)])
+    for i in range(8):
+        p.label(str(i + 1), ix[i], JACKS_2 - JACK_LABEL_DY, jack=True, fill=AMBER)
+    jack_row(p, JACKS_2, [("GATES_OUT", "GATES", ix[8]), ("VEL_OUT", "VEL", ix[9]), ("LOCK_A_OUT", "LOCK A", ix[10]),
+                          ("LOCK_B_OUT", "LOCK B", ix[11]), ("ACCENT_OUT", "ACCENT", ix[12])], fill=AMBER)
+    p.save()
+
+
 if __name__ == "__main__":
     warp()
     contour()
+    mutate()

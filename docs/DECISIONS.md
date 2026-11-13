@@ -37,3 +37,22 @@ Places where the build spec (`docs/design/03-build-instructions.md`) was ambiguo
 18. **CONTOUR velocity "slope"** is scaled against the steepest slope the current curve can have, so a full-strength hit reads 10 V whatever the harmonic ratios are.
 19. **CONTOUR screen:** in HARM mode the curve is drawn from the knob settings, so it updates even when the clock is stopped. In MOIRE and EXT modes it shows the curve as it was actually played over the last cycle.
 20. **The unit test "PHASE_1 completes one cycle in 2.000 s"** and the others in §4 and §6 are all present; the 3/4-ratio test is taken after exactly 384,000 samples (4 bars at 120 BPM, 48 kHz).
+
+## M2: MUTATE
+
+1. **Panel width.** MUTATE is 38 HP (spec: 20). The 64-step grid, 12 knobs, 7 rule trimmers and 26 jacks with full-size labels need it.
+2. **Kick generation.** §5 says the Euclidean kick pattern is "rotated by a seeded amount". A kick turned by an arbitrary number of steps rarely sounds like a beat, so the pattern starts on the downbeat 85 % of the time and otherwise sits on the off-beats. "Extra hits with probability density x 0.3" is applied once per group of four steps, on an off-beat step, not per step.
+3. **Snare generation** assumes four beats to the bar (MUTATE does not know WARP's BEATS): backbeats land a quarter and three quarters of the way through each bar, rounded to a step. Ghost notes appear with chance density x 0.18 per empty step, and four in ten of them only play some of the time.
+4. **Default tracks:** kick, snare, hat, perc, hat, perc, texture, free. Tracks 1 to 5 are 16 steps; tracks 6, 7 and 8 are 12, 20 and 14 steps so there is polymeter from the first press of GEN. A generated track is never left empty.
+5. **GEN acts at once,** not at the next bar, so the result is audible while the clock is stopped. Mutations, HOME and recalled slots act only on bar lines. HOME SET acts at once.
+6. **Rule details where §5 was open.** THIN/FILL: a coin toss between removing a hit (quiet ones first; never the last hit) and adding one on an empty step. RATCHET: a hit that already rolls goes back to a single hit half the time. MIRROR and COPY spans wrap round the end of the track. LOCK moves both locks of a run of steps by 0.1, each up or down.
+7. **"Every Nth pass", "first pass only"** count passes of each track since the last reset. **"p %"** dice depend only on the seed, the track and the step number, so a run repeats exactly after a reset.
+8. **Hits pulled early** (negative micro-timing, including the MICRO input) are started from the step before, as §5 asks. A step that has already been started this way is not changed by a mutation landing on the bar line it belongs to.
+9. **MICRO input:** ±5 V shifts every hit by up to half a step. It is read when each step is scheduled.
+10. **Density, amount and drift CVs:** ±5 V covers the whole range and adds to the knob.
+11. **CLOCK mode** (nothing in PHASE): each pulse is one step. Between pulses the position glides at the speed of the previous pulse, so ratchets and micro-timing still work. The first pulse after a reset is step 1.
+12. **Turning STEPS while running** renumbers the steps; MUTATE carries on from where it is rather than waiting for the old count.
+13. **Triggers** use the same audio-rate-safe pulses as CONTOUR (M1 decision 13).
+14. **Screen editing:** click a step to turn it on or off; drag up or down on a step to set its velocity; click past a track's end to lengthen it, or drag the bright end line; click a track label to mute; right-click a label for its style. Changing a track's style rewrites that track. Ratchets, micro-timing and conditions are shown but not edited by hand: §5 makes hand editing optional and Haer prefers steering to editing.
+15. **KEEP stores** the playing pattern, the home pattern and the 16 musical knobs (STEPS to SWING).
+16. **Not in the spec:** right-click, "Write this track afresh", which regenerates a single track from the current seed and density.

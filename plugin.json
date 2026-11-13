@@ -1,0 +1,23 @@
+{
+  "slug": "Codex",
+  "name": "Codex",
+  "version": "2.0.0",
+  "license": "GPL-3.0-or-later",
+  "brand": "Haer",
+  "author": "Haer",
+  "authorEmail": "",
+  "authorUrl": "",
+  "pluginUrl": "",
+  "manualUrl": "",
+  "sourceUrl": "https://github.com/hardyfinn/HaerSystemMk1",
+  "donateUrl": "",
+  "changelogUrl": "",
+  "modules": [
+    {
+      "slug": "Blank",
+      "name": "Codex Blank",
+      "description": "Placeholder blank panel from milestone 0. It shows that the plugin loads.",
+      "tags": ["Blank"]
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-# Codex: a VCV Rack 2 plugin.
+# Haer System Mk1: a VCV Rack 2 plugin.
 #   make            build the plugin        (needs the Rack SDK: make RACK_DIR=/path/to/Rack-SDK)
 #   make dist       build the .vcvplugin file into dist/
 #   make install    copy the plugin into Rack's plugin folder

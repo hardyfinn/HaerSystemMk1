@@ -33,7 +33,7 @@ jobs:
           if grep -q "warning:" build.log; then echo "Compiler warnings found (the spec asks for none)"; exit 1; fi
       - uses: actions/upload-artifact@v4
         with:
-          name: Codex-mac-arm64
+          name: HaerSystemMk1-mac-arm64
           path: dist/*.vcvplugin
       - name: Publish to the "latest" release
         if: github.ref == 'refs/heads/main'

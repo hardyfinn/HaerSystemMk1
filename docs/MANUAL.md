@@ -1,4 +1,4 @@
-# Codex manual
+# Haer System Mk1 manual
 
 One page per module, in the order they were built. Starter patches are in [PATCHES.md](PATCHES.md). Every knob and jack also explains itself when you hover over it in Rack.
 
@@ -340,7 +340,7 @@ Each rule knob is "how often the rule is enforced": 0 never, full always.
 **Three tips**
 1. Map one macro to WARP's DEPTH, MUTATE's AMOUNT and a DIST on DEPTH, with MUTATE's range set to 0 to 40 %: one knob from "tight and dry" to "loose and far away".
 2. Make three snapshots that differ a lot, set WALK to 50 % and BARS to 8, TIME to 4: the piece now changes by itself, but only between places you chose.
-3. M1 to M8 are ordinary CVs. Patch one to a filter outside Codex, and scenes and gestures reach modules that STEER has no mapping to.
+3. M1 to M8 are ordinary CVs. Patch one to a filter outside Haer System Mk1, and scenes and gestures reach modules that STEER has no mapping to.
 
 ## FLOW: a small fluid that moves the modulation (30 HP)
 
@@ -428,7 +428,7 @@ Each rule knob is "how often the rule is enforced": 0 never, full always.
 
 ## Working with other plugins
 
-Codex works with VCV Fundamental alone, but these go well alongside it (spec §16). Plugin names change now and then; check the VCV Library if one is not found.
+Haer System Mk1 works with VCV Fundamental alone, but these go well alongside it (spec §16). Plugin names change now and then; check the VCV Library if one is not found.
 
 | Module (plugin) | Use it for |
 |---|---|

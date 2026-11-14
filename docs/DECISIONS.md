@@ -239,7 +239,7 @@ Places where the build spec (`docs/design/03-build-instructions.md`) was ambiguo
    | EAR, both inputs and pitch | 1.2 to 1.5 % |
 
    FMX with more than about 3 voices and DEPTH (which §11 gives 3 %) go over the general 1.5 % budget; the others are inside it. VAULT, STEER, MUTATE and CHAIN do little per sample and were not measured separately. Real numbers on a Mac will differ; Rack's own meter (Engine menu, CPU meter, or F3) shows them.
-2. **Plugin name.** Still "Codex" with slug "Codex". The spec asks for the final name and slug at M10; changing the slug later means saved patches stop finding the modules, so it should be settled before patches are kept.
+2. **Plugin name.** Haer chose **Haer System Mk1**, slug `HaerSystemMk1` (2.11.0), matching the repository. "codex" stays only as the C++ namespace inside the code, which nobody sees in Rack.
 3. **Patch recipes** use only VCV Fundamental and Core besides Codex, so they work on any install. Where a recipe needs a steady voltage (FMX's bass note), any module that gives one will do.
 4. **TESTS.md** turns every "Haer's checklist" in the spec into steps with the panel's own names, grouped by milestone, plus a few checks for things added along the way.
 

@@ -1,6 +1,6 @@
 # HaerSystemMk1
 
-A VCV Rack 2 plugin of modules for procedural, Autechre-influenced music: bending time, self-rewriting rhythm, physical and FM voices, and a generate, keep and perform workflow. Working name: **Codex**.
+A VCV Rack 2 plugin of modules for procedural, Autechre-influenced music: bending time, self-rewriting rhythm, physical and FM voices, and a generate, keep and perform workflow. Plugin name in Rack: **Haer System Mk1** (slug `HaerSystemMk1`).
 
 The design and build specification is in [`docs/design/`](docs/design/):
 
@@ -34,7 +34,7 @@ The plugin is built in milestones (§15 of the spec). See [`CHANGELOG.md`](CHANG
 
 ## Installing a build
 
-Mac (Apple Silicon) builds are made automatically. Download `Codex-2.x.x-mac-arm64.vcvplugin` from the [releases page](https://github.com/hardyfinn/HaerSystemMk1/releases) and drop it into Rack's plugin folder (in Rack: Help → Open user folder → `plugins-mac-arm64`), then restart Rack.
+Mac (Apple Silicon) builds are made automatically. Download `HaerSystemMk1-2.x.x-mac-arm64.vcvplugin` from the [releases page](https://github.com/hardyfinn/HaerSystemMk1/releases) and drop it into Rack's plugin folder (in Rack: Help → Open user folder → `plugins-mac-arm64`), then restart Rack.
 
 ## Building from source
 

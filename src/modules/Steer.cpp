@@ -93,7 +93,7 @@ struct Steer : Module {
 	// ---- version tree (UI thread) ----
 	SteerTree tree;
 	bool treeDirty = false;
-	int scope = 1; // 0 every module, 1 Codex modules, 2 mapped and linked modules
+	int scope = 1; // 0 every module, 1 this plugin's modules, 2 mapped and linked modules
 	int64_t vaultId = -1;
 	std::vector<int64_t> keepIds;
 	struct Pair {
@@ -1215,7 +1215,7 @@ struct SteerWidget : ModuleWidget {
 				sub->addChild(createMenuLabel("No VAULT or generator in the rack"));
 		}));
 		menu->addChild(createIndexSubmenuItem("A snapshot stores the settings of",
-			{"Every module in the rack", "Codex modules only", "Mapped and linked modules only"},
+			{"Every module in the rack", "Haer System Mk1 modules only", "Mapped and linked modules only"},
 			[=]() { return m->scope; }, [=](int i) { m->scope = i; }));
 		menu->addChild(createMenuItem("Delete the whole version tree", string::f("%d versions", (int)m->tree.nodes.size()), [=]() {
 			if (m->autoRunning)

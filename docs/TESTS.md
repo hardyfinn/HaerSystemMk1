@@ -2,7 +2,7 @@
 
 One section per milestone. Each test says what to patch, what to do and what you should hear or see. Tick it when it does that; if it doesn't, write a few words next to it about what happened instead. The tests come from the "Haer's checklist" parts of the build spec, with the panel's own names, plus a few for things added along the way (marked *extra*).
 
-**Before you start.** Install the latest `Codex-2.10.0-mac-arm64.vcvplugin` (drop it into Rack's `plugins-mac-arm64` folder and restart Rack). Every test needs an **Audio** module (VCV Core) for sound and usually a **WARP** for time, with RUN on. "Scope", "Split", "Merge", "Mix" and "LFO" are the VCV Fundamental modules of those names. "Right-click X" means right-click on module X's panel.
+**Before you start.** Install the latest `HaerSystemMk1-2.11.0-mac-arm64.vcvplugin` (drop it into Rack's `plugins-mac-arm64` folder and restart Rack). If an older `Codex` build is in that folder, delete it first. Every test needs an **Audio** module (VCV Core) for sound and usually a **WARP** for time, with RUN on. "Scope", "Split", "Merge", "Mix" and "LFO" are the VCV Fundamental modules of those names. "Right-click X" means right-click on module X's panel.
 
 None of the screens could be seen while building (Rack can't run on the build server), so please also note anything on a screen that looks wrong, cramped or unreadable.
 
@@ -10,7 +10,7 @@ None of the screens could be seen while building (Rack can't run on the build se
 
 ## M0: the plugin loads
 
-- [ ] Rack starts without an error about Codex, and the module browser lists 13 modules under the brand **Haer**: WARP, CONTOUR, MUTATE, STRIKE, FMX, CHAIN, SPLICE, DEPTH, VAULT, STEER, FLOW, TUNE MAP, EAR.
+- [ ] Rack starts without an error about Haer System Mk1, and the module browser lists 13 modules under the brand **Haer**: WARP, CONTOUR, MUTATE, STRIKE, FMX, CHAIN, SPLICE, DEPTH, VAULT, STEER, FLOW, TUNE MAP, EAR.
 - [ ] Hovering over any knob or jack shows a tooltip that says what it does.
 
 ## M1: WARP and CONTOUR (time)
@@ -108,4 +108,3 @@ None of the screens could be seen while building (Rack can't run on the build se
 
 - [ ] Build each of the five recipes in `docs/PATCHES.md`. Each one makes the sound it describes.
 - [ ] Run "Bent electro" for an hour with STEER's WALK on: no clicks, dropouts, silence or crashes, and Rack's CPU meter (F3) stays steady.
-- [ ] The final plugin name and slug: tell me what Codex should be called before you start keeping patches you care about.

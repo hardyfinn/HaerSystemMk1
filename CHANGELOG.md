@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.11.0 (2026-11-14)
+
+- The plugin is now called **Haer System Mk1** (slug `HaerSystemMk1`), replacing the working name Codex. Builds are named `HaerSystemMk1-<version>-mac-arm64.vcvplugin`. Remove any older `Codex` build from Rack's plugin folder: patches saved with the Codex builds will not find these modules.
+
 ## 2.10.0, milestone M10 (2026-11-14)
 
 All 13 modules built.

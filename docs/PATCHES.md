@@ -1,6 +1,6 @@
 # Patch recipes
 
-Four starter patches (spec §17), plus one that uses the listening layer. They need only Codex and VCV Fundamental and Core, which come with Rack. Knob settings are starting points: move them.
+Four starter patches (spec §17), plus one that uses the listening layer. They need only Haer System Mk1 and VCV Fundamental and Core, which come with Rack. Knob settings are starting points: move them.
 
 Every patch starts the same way: **WARP** for time, and an **Audio** module (VCV Core) at the end. Set WARP's RUN on.
 

@@ -1,7 +1,7 @@
 {
   "slug": "Codex",
   "name": "Codex",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "license": "GPL-3.0-or-later",
   "brand": "Haer",
   "author": "Haer",
@@ -73,6 +73,27 @@
         "Random",
         "Quantizer",
         "Polyphonic"
+      ]
+    },
+    {
+      "slug": "Splice",
+      "name": "SPLICE",
+      "description": "Cut-up and smear buffer: 16 seconds of stereo tape that stutters the slice that has just gone by, with repeats that speed up, change pitch, reverse and fade, or dissolve into grains",
+      "tags": [
+        "Sampler",
+        "Granular",
+        "Delay",
+        "Effect"
+      ]
+    },
+    {
+      "slug": "Depth",
+      "name": "DEPTH",
+      "description": "Reverb that places four stereo sources at different distances in one room: each gets its own pre-delay, air loss and early reflections, and all share a tail that can freeze or bloom",
+      "tags": [
+        "Reverb",
+        "Mixer",
+        "Effect"
       ]
     }
   ]

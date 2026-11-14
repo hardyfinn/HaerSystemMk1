@@ -487,6 +487,75 @@ def chain():
     p.save()
 
 
+def splice():
+    p = Panel("Splice", 26, "SPLICE", TEAL, "cut-up and smear buffer")
+    p.screen("DISPLAY", 5.0, 15.0, p.w - 10.0, 34.0)
+
+    # the tape and the slice
+    xs = [11.0 + i * 15.72 for i in range(8)]
+    p.place("REC", "switch3", (xs[0] - 3.0, ROW_A))
+    p.label("REC", xs[0] - 3.0, ROW_A - KNOB_LABEL)
+    p.note("ALWAYS", xs[0] + 0.6, ROW_A - 3.0, anchor="start")
+    p.note("GATED", xs[0] + 0.6, ROW_A + 0.8, anchor="start")
+    p.note("OFF", xs[0] + 0.6, ROW_A + 4.6, anchor="start")
+    knob_row(p, ROW_A, [("DIV", "DIV", xs[1] + 3.0), ("TIME", "TIME", xs[2] + 2.0), ("HOLD", "HOLD", xs[3] + 1.0)])
+    # what each repeat does
+    for name, label, x in [("ACCEL", "ACCEL", xs[4]), ("PITCH", "PITCH", xs[5]), ("REVERSE", "REV", xs[6]),
+                           ("DECAY", "DECAY", xs[7])]:
+        p.place(name, "knob", (x, ROW_A))
+        p.label(label, x, ROW_A - KNOB_LABEL, fill=TEAL)
+    p.line(xs[4] - 5, ROW_A - 12.4, xs[7] + 5, ROW_A - 12.4, TEAL, 0.35)
+    p.note("EACH REPEAT", xs[4] - 5, ROW_A - 13.6, anchor="start", fill=TEAL)
+    # grains
+    knob_row(p, ROW_B, [("SMEAR", "SMEAR", xs[0]), ("GRAIN", "GRAIN", xs[1]), ("DENSITY", "DENS", xs[2]),
+                        ("JITTER", "JITTER", xs[3]), ("WIDTH", "WIDTH", xs[4])])
+    knob_row(p, ROW_B, [("SEED", "SEED", xs[7])])
+    p.note("DIV: WITH A PHASE CABLE", xs[5] - 7.0, ROW_B - 2.0, anchor="start")
+    p.note("TIME: WITHOUT ONE", xs[5] - 7.0, ROW_B + 1.8, anchor="start")
+
+    ix = [10.0 + i * 12.45 for i in range(10)]
+    jack_row(p, JACKS_1, [("L_IN", "IN L", ix[0]), ("R_IN", "IN R", ix[1]), ("PHASE_IN", "PHASE", ix[2]),
+                          ("STUTTER_IN", "STUT", ix[3]), ("FREEZE_IN", "FREEZE", ix[4]), ("SCRUB_IN", "SCRUB", ix[5]),
+                          ("ACCEL_IN", "ACCEL", ix[6]), ("PITCH_IN", "PITCH", ix[7]), ("SMEAR_IN", "SMEAR", ix[8]),
+                          ("DIV_IN", "DIV", ix[9])])
+    jack_row(p, JACKS_2, [("SEED_IN", "SEED", ix[0])])
+    p.outbox(ix[6] - 7.5, JACKS_2 - 9.2, p.w - 3.0 - (ix[6] - 7.5), 14.6)
+    jack_row(p, JACKS_2, [("L_OUT", "L", ix[6]), ("R_OUT", "R", ix[7]), ("SLICE_OUT", "SLICE", ix[8]),
+                          ("REPEAT_OUT", "RPT", ix[9])], fill=TEAL)
+    p.save()
+
+
+def depth():
+    p = Panel("Depth", 24, "DEPTH", TEAL, "four sources in one room")
+    # one column per source
+    cx = [30.0, 45.0, 60.0, 75.0]
+    rows = [("DIST", "knob", 31.0, "DIST"), ("PAN", "small", 48.0, "PAN"), ("DIST_IN", "jack", 62.5, "DIST CV"),
+            ("L_IN", "jack", 76.0, "IN L"), ("R_IN", "jack", 89.5, "IN R")]
+    for i, x in enumerate(cx):
+        p.label(str(i + 1), x, 21.5, fill=TEAL)
+    for name, kind, y, label in rows:
+        p.place(name, kind, [(x, y) for x in cx])
+        p.label(label, 5.0, y + 1.2, anchor="start", jack=kind == "jack")
+    p.line(84.5, 17.0, 84.5, 94.0)
+
+    # the room
+    gx = [96.0, 112.5]
+    gy = [31.0, 52.0, 73.0]
+    knob_row(p, gy[0], [("SIZE", "SIZE", gx[0]), ("DECAY", "DECAY", gx[1])])
+    knob_row(p, gy[1], [("DAMP", "DAMP", gx[0]), ("MOD", "MOD", gx[1])])
+    p.place("INSTABILITY", "knob", (gx[0], gy[2]))
+    p.label("INSTAB", gx[0], gy[2] - KNOB_LABEL, fill=TEAL)
+    knob_row(p, gy[2], [("MIX", "MIX", gx[1])])
+
+    ix = [11.0 + i * 14.5 for i in range(9)]
+    jack_row(p, JACKS_1, [("SIZE_IN", "SIZE", ix[0]), ("DECAY_IN", "DECAY", ix[1]), ("INSTABILITY_IN", "INSTAB", ix[2]),
+                          ("MOD_IN", "MOD", ix[3]), ("FREEZE_IN", "FREEZE", ix[4])])
+    p.outbox(ix[4] - 7.5, JACKS_2 - 9.2, p.w - 3.0 - (ix[4] - 7.5), 14.6)
+    jack_row(p, JACKS_2, [("L_OUT", "OUT L", ix[4]), ("R_OUT", "OUT R", ix[5]), ("WET_L_OUT", "WET L", ix[6]),
+                          ("WET_R_OUT", "WET R", ix[7])], fill=TEAL)
+    p.save()
+
+
 if __name__ == "__main__":
     warp()
     contour()
@@ -494,3 +563,5 @@ if __name__ == "__main__":
     strike()
     fmx()
     chain()
+    splice()
+    depth()

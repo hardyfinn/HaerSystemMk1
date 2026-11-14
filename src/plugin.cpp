@@ -10,4 +10,6 @@ void init(Plugin* p) {
 	p->addModel(modelStrike);
 	p->addModel(modelFmx);
 	p->addModel(modelChain);
+	p->addModel(modelSplice);
+	p->addModel(modelDepth);
 }

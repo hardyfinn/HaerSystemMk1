@@ -12,3 +12,5 @@ extern Model* modelMutate;
 extern Model* modelStrike;
 extern Model* modelFmx;
 extern Model* modelChain;
+extern Model* modelSplice;
+extern Model* modelDepth;

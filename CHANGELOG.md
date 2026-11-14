@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.5.0, milestone M5 (2026-11-14)
+
+Treatment and space.
+
+- **SPLICE** (26 HP): 16 seconds of stereo tape that is always recording. A gate or trigger at STUTTER repeats the slice that has just gone by; the slice is a division of WARP's bar, or a time. Repeats can speed up into a buzz or slow down, climb or fall in pitch, play backwards by chance and fade. SMEAR dissolves the chops into a cloud of up to 32 grains. SCRUB plays the slice by hand from a CV. Screen with the tape, record head, slice and grains. The tape can be saved with the patch.
+- **DEPTH** (24 HP): a reverb for four stereo sources, each with its own distance. Distance sets how late, how dull and how quiet the direct sound is and how much of the room comes with it. One shared tail with size, decay, damping and movement; FREEZE holds it; INSTABILITY makes it swell and smear without running away. Separate room-only outputs.
+- 17 new unit tests (99 in all).
+
 ## 2.4.0, milestone M4 (2026-11-14)
 
 Melody.

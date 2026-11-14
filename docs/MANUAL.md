@@ -220,3 +220,60 @@ Each rule knob is "how often the rule is enforced": 0 never, full always.
 2. Clock voice 1 slowly as a bass (CENTER -2, CHAR low, HOME at 70 %) and voice 2 fast above it with INTVL full: the top line dances but always lands on a third or sixth above the bass.
 3. Patch VIOL to something audible, or to MUTATE's MUTATE input: the moments where the rules collide become events.
 
+## SPLICE: cut-up and smear buffer (26 HP)
+
+**What it is for.** Chopping and treating whatever passes through it. SPLICE is a 16 second loop of tape that is always recording its input. Normally you hear the input untouched. When STUTTER goes high it stops and repeats the slice that has just gone by, and the knobs decide what happens to each repeat. SMEAR turns the result into a cloud of grains.
+
+**Screen.** The whole tape, 16 seconds from left to right. The amber line is the record head (grey when the tape is held). The teal band is the slice: faint while it just follows the record head, bright while it is being repeated, with a line for the play position. Short teal ticks along the bottom are grains. The top line shows the slice length and, during a stutter, which repeat is playing.
+
+| Control | What it does |
+|---|---|
+| REC | ALWAYS: records all the time. GATED: records only while FREEZE is high. OFF: the tape keeps what it has. |
+| DIV | Slice length as a part of the bar: 1, 1/2, 1/3, 1/4, 1/6, 1/8, 1/12, 1/16, 1/24, 1/32. Used when PHASE is patched. |
+| TIME | Slice length, 10 ms to 2 s. Used when PHASE is not patched. |
+| HOLD | How many slice lengths a trigger at STUTTER stutters for. 0 = only while STUTTER is held high. |
+| ACCEL | Each repeat is this many times as long as the one before. Left of centre: speeds up into a buzz. Right: slows down. |
+| PITCH | Each repeat is up to 2 semitones higher or lower than the one before (and shorter or longer, like tape). |
+| REV | Chance that a repeat plays backwards. |
+| DECAY | Each repeat's level compared to the one before, 50 to 100 %. |
+| SMEAR | From clean chops to all grains. |
+| GRAIN | Grain length, 5 to 200 ms. |
+| DENS | Grains per second, 2 to 100. |
+| JITTER | How far the grains stray from the play position, up to one slice. |
+| WIDTH | How far left and right the grains are thrown. |
+| SEED | Same seed, same reversed repeats and same cloud. |
+
+**Inputs.** IN L, IN R (L alone = mono). PHASE (a bar ramp from WARP). STUT (gate or trigger). FREEZE (gate: stops recording). SCRUB (0 to 10 V moves the play position through the slice by hand). ACCEL, PITCH, SMEAR, DIV and SEED CVs.
+
+**Outputs.** L, R. SLICE (a trigger at the start of every repeat). RPT (0.5 V more for every repeat: a rising staircase during a stutter).
+
+**Right-click.** Save buffer with patch.
+
+**Three tips**
+1. MUTATE's ACCENT into STUT, WARP's PHASE into PHASE, DIV at 1/8 or 1/16: accented beats chop and repeat in time. ACCEL at 0.6x makes each one fall into a buzz.
+2. RPT into STRIKE's or FMX's V/OCT, SLICE into its TRIG: a second voice that climbs with every repeat.
+3. Record something, set REC to OFF, patch a slow LFO or CONTOUR's CURVE into SCRUB and turn SMEAR up: the frozen moment is bowed back and forth.
+
+## DEPTH: four sources in one room (24 HP)
+
+**What it is for.** Front-to-back mixing. Four sources share one room, and each has a DIST knob that says how far away it stands. A close source is immediate, bright and mostly direct. A far one arrives late, dull and quiet, wrapped in reflections and tail. It is one module doing what four sends, four pre-delays and four filters would.
+
+| Control | What it does |
+|---|---|
+| DIST 1 to 4 | Distance of each source. Sets its delay (2 to 62 ms), its loss of top, its direct level (down to a fifth), its early reflections and how much goes to the tail. |
+| PAN 1 to 4 | Left and right position of each source. |
+| SIZE | Size of the room, a quarter to twice the normal size. |
+| DECAY | How long the tail takes to die away, 0.3 to 30 s. |
+| DAMP | How fast the tail loses its top. |
+| MOD | Slow movement inside the tail. |
+| INSTAB | The tail feeds itself: it grows, swells and smears, but is held by a limiter. |
+| MIX | From direct sound only to room only, at OUT L and OUT R. |
+
+**Inputs.** For each source: DIST CV, IN L, IN R (one cable = mono). SIZE, DECAY, INSTAB and MOD CVs. FREEZE (gate: holds the tail as it is).
+
+**Outputs.** OUT L, OUT R (everything, balanced by MIX). WET L, WET R (reflections and tail only, for your own mixing).
+
+**Three tips**
+1. Drums close (DIST 10 %), bass a little back, melody further, a texture at 95 %: the mix gets depth without touching a fader.
+2. A slow LFO into DIST CV 1: the sound walks away and comes back, with a slight bend in pitch as it moves.
+3. Long DECAY, INSTAB up, then a gate into FREEZE at the peak: a held wall of sound to play over. STEER will later be able to ride INSTAB as a performance macro.

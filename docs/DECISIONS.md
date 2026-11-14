@@ -111,3 +111,39 @@ Places where the build spec (`docs/design/03-build-instructions.md`) was ambiguo
 14. **Painting** on the screen: a dim cell is painted full and a bright one emptied; dragging carries on with the same. Finer weights come from learning. Painting a voice that follows CHARACTER first copies that table, so nothing jumps.
 15. **Labels.** SCALE LOCK, NO PARALLELS, KEEP INTERVAL, CONTRARY and HOME PULL are lettered IN KEY, NO PAR, INTVL, CONTRA and HOME; LEAP and HOME_STEPS are SEMIS and STEPS next to the rule they belong to; STEP 1 to 4 are ST 1 to ST 4; LEARN_PITCH is PITCH; RECALL's jack is RECL.
 
+## M5: SPLICE and DEPTH
+
+### SPLICE
+
+1. **Panel width.** SPLICE is 26 HP (spec: 12): the tape screen, 14 controls and 15 jacks with full-size labels.
+2. **REC "gated".** The spec lists the switch position but no record-gate jack. Read as: on GATED the FREEZE jack becomes the record gate (high = record). On ALWAYS, FREEZE high stops recording, as §10 says. On OFF nothing is recorded and FREEZE does nothing.
+3. **Recording goes on during a stutter.** The slice being repeated was taken before the stutter started and the tape is 16 s long, so the repeats are not disturbed. Hold FREEZE as well if the tape should stay as it is.
+4. **What "the most recent slice" is.** The slice ends with the sample that arrived together with the STUTTER edge. Its length is rounded to whole samples so a plain repeat is an exact copy.
+5. **Slice length from PHASE.** The bar length is measured from how fast the ramp is moving right now (averaged over 20 ms), then divided by DIV. With WARP bending its bars, slices taken in a fast part of the bar are shorter than those from a slow part. If the ramp stands still, TIME is used. The length is fixed when the stutter starts.
+6. **HOLD** is a knob, 0 to 16 slice lengths, default 4. A stutter lasts as long as STUTTER is high, and at least HOLD slices; so MUTATE's 1 ms ACCENT trigger gives four slices' worth of repeats. At 0 only the gate counts.
+7. **ACCEL** repeat lengths never go below 2 ms or above the slice. A repeat raised in pitch is also shorter (tape style), and the 2 ms floor applies after that too.
+8. **REVERSE, DECAY, SEED.** SEED is not in the spec's list of controls but §3.4 says every random module has one; added as a knob. A new seed starts at the next stutter. The same seed gives the same pattern of reversed repeats and the same grain cloud.
+9. **Crossfades** are 2 ms equal-power, as §10 says. Between two repeats of the same material that is a bump of up to 3 dB for 2 ms; it is not audible as a click.
+10. **SCRUB** takes over the play position whenever a cable is in the jack (stutter or not): 0 V is the start of the slice, 10 V the end, smoothed over 3 ms. Without a stutter the slice is the newest one, just behind the record head.
+11. **SMEAR.** Grains are read around the play position (or the scrub position), strayed by JITTER; without a stutter, around the newest slice, so SMEAR alone turns the live input into a cloud with a short delay. Grains play at normal pitch. The cloud is turned down as grains overlap so it stays about as loud as the source.
+12. **Outputs** are limited at 12 V (clean below 10 V). REPEAT INDEX stops at 10 V (repeat 20).
+13. **Save buffer with patch** is off by default. The tape is written as a 16-bit stereo WAV (±10 V = full scale, about 3 MB at 48 kHz), oldest sample first, into the patch's storage folder; the 16-bit rounding is far below what can be heard. A patch saved without the option removes the file. Changing Rack's sample rate keeps the tape (it is resampled).
+14. **Mono.** A cable in IN L alone feeds both sides. Poly cables are summed.
+15. **Labels.** STUTTER, REVERSE, DENSITY, PITCH_RAMP and REPEAT_INDEX are lettered STUT, REV, DENS, PITCH and RPT.
+
+### DEPTH
+
+16. **Panel width.** DEPTH is 24 HP (spec: 16): four source strips of five parts each, six room knobs and nine more jacks with full-size labels.
+17. **Mono and unplugged sources.** A cable in either jack of a source feeds both sides. A source with no cable adds nothing; its last sound is allowed to finish in the room. Poly cables are summed.
+18. **Air loss.** §11's wording gives the cutoff as 1.5 kHz + 16.5 kHz × (1 − DIST)², which is 18 kHz at DIST 0 and 1.5 kHz at DIST 1. At DIST 0 the filter is switched out completely.
+19. **Early reflections** are taken from the source after its pre-delay, as a mono sum, at SIZE × the eight times in §11. Odd taps lean right and even taps left; PAN leans all of them. Their level rises from 10 % (close) to 100 % (far). Each later tap is a little quieter.
+20. **PAN** places the direct sound (and leans the reflections). It is a balance control for stereo sources. The tail is shared and stays wide.
+21. **Tail input.** Left and right sends go through their own four allpasses (2, 3, 5, 7 ms and 3, 5, 7, 11 ms) and then into alternate lines.
+22. **Line lengths** are SIZE × 29, 37, 43, 53, 61, 71, 79, 89, 97, 103, 109, 127, 131, 139, 149 and 157 ms. Turning SIZE glides the lines to their new lengths (a tape-like pitch bend in the tail) instead of jumping.
+23. **DECAY** uses §11's formula; measured decay times are within 2 % of the knob at SIZE 1. DAMP makes the top die faster than that, so the knob reads true for the low end. DAMP at 0 is no filter at all.
+24. **MOD** speeds are fixed (not from a SEED knob; DEPTH has none), so a patch always sounds the same.
+25. **INSTABILITY.** Gain × (1 + 0.08 × INSTABILITY), and pairs of lines are slowly turned into each other by up to 40°. The limiter inside each line is clean below 3 V and stops at 5 V, so ordinary reverb is untouched and a swelling tail levels off as a loud, dense wash. All four outputs are also limited to 12 V (clean below 9 V). With DECAY short, INSTABILITY only lengthens the tail; with INSTABILITY full it swells without input once DECAY is above roughly 8 s at SIZE 1.
+26. **FREEZE** is a gate jack only (the spec has no button). While it is high nothing new enters the tail, damping, movement and instability are off, and the level holds (measured: 0.04 dB change in 10 s). The direct sound and reflections still pass, so you can play over a frozen tail.
+27. **MIX** at 50 % is equal parts direct sound and room (equal-power). WET L and WET R ignore MIX.
+28. **CV ranges.** DIST, INSTAB, MOD: 10 V = full range. SIZE and DECAY: 1 V doubles.
+29. **CPU.** About 2.5 % of one core on the build server with four sources and MOD up, inside §11's 3 % budget.

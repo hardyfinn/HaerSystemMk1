@@ -426,9 +426,71 @@ def fmx():
     p.save()
 
 
+def chain():
+    p = Panel("Chain", 34, "CHAIN", AMBER, "four melody voices with harmony rules")
+    p.screen("DISPLAY", 5.0, 15.0, 80.0, 40.0)
+
+    # one column per voice
+    hx = [118.0, 132.0, 146.0, 160.0]
+    hy = [27.0, 38.0, 49.0]
+    for i, x in enumerate(hx):
+        p.label(str(i + 1), x, 19.5, fill=AMBER)
+    for label, y in zip(("CHAR", "RANGE", "CENTER"), hy):
+        p.label(label, 90.0, y + 1.2, anchor="start")
+    p.place("CHARACTER", "small", [(x, hy[0]) for x in hx])
+    p.place("RANGE", "trim", [(x, hy[1]) for x in hx])
+    p.place("CENTER", "trim", [(x, hy[2]) for x in hx])
+
+    knob_row(p, ROW_A, [("SCALE", "SCALE", 12.0), ("ROOT", "ROOT", 30.0)])
+    p.place("ORDER", "switch2", (46.0, ROW_A))
+    p.label("ORDER", 50.0, ROW_A - KNOB_LABEL)
+    p.note("2 NOTES BACK", 50.0, ROW_A - 1.6, anchor="start")
+    p.note("1 NOTE BACK", 50.0, ROW_A + 3.0, anchor="start")
+    knob_row(p, ROW_A, [("GLIDE", "GLIDE", 80.0), ("SEED", "SEED", 97.0)])
+    knob_row(p, ROW_A, [("KEEP", "KEEP", 113.0)], kind="button")
+    knob_row(p, ROW_A, [("RECALL", "RECALL", 127.0)], kind="small")
+    slot_lights(p, 139.0, ROW_A)
+
+    # the rules: six strengths (amber), and the two numbers that go with MAX LEAP and HOME
+    rx = [12.0 + i * 18.0 for i in range(8)]
+    rules = [("RULE_SCALE", "IN KEY"), ("RULE_PARALLEL", "NO PAR"), ("RULE_INTERVAL", "INTVL"),
+             ("RULE_CONTRARY", "CONTRA"), ("RULE_LEAP", "MAX LEAP")]
+    for (name, label), x in zip(rules, rx):
+        p.place(name, "knob", (x, ROW_B))
+        p.label(label, x, ROW_B - KNOB_LABEL, fill=AMBER)
+    knob_row(p, ROW_B, [("LEAP", "SEMIS", rx[5])])
+    p.place("RULE_HOME", "knob", (rx[6], ROW_B))
+    p.label("HOME", rx[6], ROW_B - KNOB_LABEL, fill=AMBER)
+    knob_row(p, ROW_B, [("HOME_STEPS", "STEPS", rx[7])])
+    p.line(rx[4] + 5.6, ROW_B, rx[5] - 5.6, ROW_B)
+    p.line(rx[6] + 5.6, ROW_B, rx[7] - 5.6, ROW_B)
+    p.note("RULES", 153.0, ROW_B - 1.0, anchor="start", fill=AMBER)
+    p.note("0 = OFF", 153.0, ROW_B + 2.6, anchor="start")
+
+    ix = [10.0 + i * 12.73 for i in range(13)]
+    p.place("STEP_IN", "jack", [(ix[i], JACKS_1) for i in range(4)])
+    for i in range(4):
+        p.label("ST " + str(i + 1), ix[i], JACKS_1 - JACK_LABEL_DY, jack=True)
+    jack_row(p, JACKS_1, [("SCALE_IN", "SCALE", ix[4]), ("ROOT_IN", "ROOT", ix[5]), ("LEARN_IN", "LEARN", ix[6]),
+                          ("LEARN_PITCH_IN", "PITCH", ix[7]), ("CHARACTER_IN", "CHAR", ix[8]),
+                          ("RESET_IN", "RESET", ix[9]), ("SEED_IN", "SEED", ix[10]), ("KEEP_IN", "KEEP", ix[11]),
+                          ("RECALL_IN", "RECL", ix[12])])
+    p.line(ix[6] + 4.6, JACKS_1, ix[7] - 4.6, JACKS_1)   # LEARN listens to the PITCH next to it
+    p.outbox(3.0, JACKS_2 - 9.2, p.w - 6.0, 14.6)
+    ox = [11.0 + i * 16.75 for i in range(10)]
+    p.place("PITCH_OUT", "jack", [(ox[i], JACKS_2) for i in range(4)])
+    p.place("GATE_OUT", "jack", [(ox[5 + i], JACKS_2) for i in range(4)])
+    for i in range(4):
+        p.label("PITCH " + str(i + 1), ox[i], JACKS_2 - JACK_LABEL_DY, jack=True, fill=AMBER)
+        p.label("GATE " + str(i + 1), ox[5 + i], JACKS_2 - JACK_LABEL_DY, jack=True, fill=AMBER)
+    jack_row(p, JACKS_2, [("POLY_OUT", "POLY", ox[4]), ("VIOLATION_OUT", "VIOL", ox[9])], fill=AMBER)
+    p.save()
+
+
 if __name__ == "__main__":
     warp()
     contour()
     mutate()
     strike()
     fmx()
+    chain()

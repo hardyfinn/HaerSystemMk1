@@ -93,3 +93,21 @@ Places where the build spec (`docs/design/03-build-instructions.md`) was ambiguo
 27. **L and R** are limited at 12 V. Eight loud voices can reach that; lower the levels or use the POLY output into a mixer.
 28. **CPU.** 2× oversampling with a 31-point half-band filter. Eight voices measured about 3 % of one core on the build server, so one to four voices fit the 1.5 % budget; a full eight-voice chord will be over it on a 2020 laptop.
 
+## M4: CHAIN
+
+1. **Panel width.** CHAIN is 34 HP (spec: 16): the table-and-history screen, 12 per-voice controls, 15 knobs and 23 jacks with full-size labels.
+2. **Tables are counted from the root,** not from C. Turning ROOT transposes a melody's habits with it, and a learned melody can be played in any key.
+3. **CHARACTER.** At 0: a bell curve one scale step wide, as §7 says; staying on the same note is allowed but made unlikely (weight 0.3) so lines keep moving. At 50 %: weights by distance in semitones, favouring thirds, fourths and fifths. At 100 %: favouring fourths, fifths and tritones, and up to a quarter of the notes are also thrown an octave away, which is where the wide leaps come from (a table of 12 notes cannot hold "an octave and a fifth").
+4. **Which voice learns.** There is one LEARN jack and four voices: the voice selected on the screen learns. Its first lesson starts from an empty table; later lessons add to it. "Reset table" in the right-click menu goes back to CHARACTER. Where a learned table has never seen what follows a note, the CHARACTER table is used for that step.
+5. **ORDER 2** is learned only, as §7 says, and stored as a full table per voice (144 × 12 numbers), not a sparse map; it is small enough and has no memory work on the audio thread.
+6. **SCALE input.** "VCV Quantizer's convention" is not a pitch-cable format, so the input follows §13C instead: every pitch on the poly cable is an allowed note, in any octave, rounded to the nearest semitone. This is what TUNE MAP's FIELD output will send.
+7. **Rules.** Each rule's dice are thrown once per step per voice. SCALE LOCK works by leaving out-of-scale notes out of the draw. NO PARALLELS looks at voices that stepped on the same sample and moved the same way. KEEP INTERVAL and CONTRARY do not apply to the reference voice itself. CONTRARY allows staying put.
+8. **When eight tries all break a rule,** the module does not just keep the least bad of those eight: it looks at every note in the voice's range and takes the one that breaks least (then the one the table likes most, then the nearest). So a rule at 100 % is only ever broken when it truly cannot be met, and VIOLATION fires only then.
+9. **HOME PULL** forces the root with a chance of strength × (steps since the root ÷ STEPS). The forced root still has to pass the other rules; if it cannot in any octave, they win.
+10. **RESET** sends every voice to the root and rewinds the random streams, so the same melody plays again. It does not touch the tables.
+11. **Gates.** §7 says gates are "marked changed when the note differs". Read as an option: right-click, "Gates only when the note changes", off by default. Gates shorten themselves at very fast step rates, like the other trigger outputs.
+12. **GLIDE** takes the same time whatever the distance.
+13. **Recalled slots** take over at the next step of any voice (CHAIN has no bar line). KEEP stores the tables, each voice's position and place in its random stream, the knobs and the right-click choices.
+14. **Painting** on the screen: a dim cell is painted full and a bright one emptied; dragging carries on with the same. Finer weights come from learning. Painting a voice that follows CHARACTER first copies that table, so nothing jumps.
+15. **Labels.** SCALE LOCK, NO PARALLELS, KEEP INTERVAL, CONTRARY and HOME PULL are lettered IN KEY, NO PAR, INTVL, CONTRA and HOME; LEAP and HOME_STEPS are SEMIS and STEPS next to the rule they belong to; STEP 1 to 4 are ST 1 to ST 4; LEARN_PITCH is PITCH; RECALL's jack is RECL.
+

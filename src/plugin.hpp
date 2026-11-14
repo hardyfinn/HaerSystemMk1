@@ -11,3 +11,4 @@ extern Model* modelContour;
 extern Model* modelMutate;
 extern Model* modelStrike;
 extern Model* modelFmx;
+extern Model* modelChain;

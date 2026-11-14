@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.4.0, milestone M4 (2026-11-14)
+
+Melody.
+
+- **CHAIN** (34 HP): up to four melody voices. Each has a table saying how likely every note is to follow every other; CHARACTER sets it from stepwise through thirds and fifths to wide leaps, or the voice can learn it from a melody you play in, or you can paint it on the screen. Six rules with a strength each: stay in the scale, no parallel fifths or octaves, keep thirds and sixths against a reference voice, contrary motion, a leap limit, and a pull back to the root. Ten scales or a scale from a poly cable, range and centre per voice, glide, a "two notes back" memory for learned melodies, a trigger when the rules cannot be met. Screen with the table and the last 32 notes of all voices. KEEP and RECALL.
+- 12 new unit tests (82 in all).
+
 ## 2.3.0, milestone M3 (2026-11-13)
 
 Our own voices.

@@ -1,7 +1,7 @@
 {
   "slug": "Codex",
   "name": "Codex",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "license": "GPL-3.0-or-later",
   "brand": "Haer",
   "author": "Haer",
@@ -61,6 +61,17 @@
       "tags": [
         "Synth voice",
         "Oscillator",
+        "Polyphonic"
+      ]
+    },
+    {
+      "slug": "Chain",
+      "name": "CHAIN",
+      "description": "Four melody voices that pick each note from a table of likely next notes, with harmony rules between them (stay in key, thirds and sixths, contrary motion, no parallels, leap limit, pull to the root). Tables can be learned from a melody or painted",
+      "tags": [
+        "Sequencer",
+        "Random",
+        "Quantizer",
         "Polyphonic"
       ]
     }

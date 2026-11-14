@@ -76,10 +76,11 @@ struct AdaptiveTrigger {
 			dip[c] = false;
 		}
 	}
-	void fire(int c) {
+	// maxSeconds: the length of a pulse when hits are far apart (1 ms for triggers, longer for gates)
+	void fire(int c, float maxSeconds = 1e-3f) {
 		dip[c] = remaining[c] > 0.f;
 		float len = sinceLast[c] * 0.5f;
-		remaining[c] = len < 1e-3f ? len : 1e-3f;
+		remaining[c] = len < maxSeconds ? len : maxSeconds;
 		sinceLast[c] = 0.f;
 	}
 	// Call once per sample per channel, after any fire() for this sample.

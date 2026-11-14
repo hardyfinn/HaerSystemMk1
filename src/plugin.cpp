@@ -9,4 +9,5 @@ void init(Plugin* p) {
 	p->addModel(modelMutate);
 	p->addModel(modelStrike);
 	p->addModel(modelFmx);
+	p->addModel(modelChain);
 }

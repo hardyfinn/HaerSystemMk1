@@ -181,3 +181,42 @@ One page per module will be added here as each milestone lands (final version at
 2. Bell: ALGO 3, operator 2 ratio 3.5 and operator 4 ratio 7 (or free them for clangs), TIME 3 s, AMP in the middle.
 3. WARP PHASE 2 into PHASE and a sequencer into V/OCT: the timbre breathes with the bar, and bends when you raise WARP's DEPTH.
 
+## CHAIN: four melody voices with harmony rules (34 HP)
+
+**What it is for.** Melodic lines that write themselves. Each voice chooses its next note from a table of habits ("after this note, that one is likely"). Rules then keep the voices sensible against each other. Send a trigger to ST 1 and all four voices take a step; give them separate triggers and each moves in its own rhythm.
+
+**Screen.** Left: the four voice numbers; click one to see its table. A dot means the table was learned or painted. Middle: the table. Rows are "the note I am on" (the outlined row is where the voice is now), columns are "the note I go to"; brighter = more likely; dim columns are outside the scale. Click or drag to paint cells full or empty. Right: the last 32 notes of all four voices, newest at the right.
+
+| Control | What it does |
+|---|---|
+| CHAR 1 to 4 | Each voice's habits. 0: moves by step. Middle: thirds and fifths. Full: wide leaps and tritones. |
+| RANGE 1 to 4 | How many octaves the voice may roam, 1 to 4. |
+| CENTER 1 to 4 | Where that range sits. 0 = around middle C; -2 for a bass. |
+| SCALE | Chromatic, major, minor, dorian, phrygian, lydian, whole tone, pentatonic minor, hirajoshi, clusters. |
+| ROOT | The key note. |
+| ORDER | Up: a learned melody is remembered two notes back, so it can tell "C after D" from "C after E". Down: one note back. |
+| GLIDE | Slide between notes, up to 500 ms. |
+| SEED | Same seed, same melody. |
+| IN KEY | Rule: stay in the scale. Normally full. Turn it down for wrong notes. |
+| NO PAR | Rule: voices moving together must not move in parallel fifths or octaves. |
+| INTVL | Rule: stay a third or a sixth from the reference voice (voice 1 unless changed by right-click). |
+| CONTRA | Rule: move the opposite way to the reference voice. |
+| MAX LEAP, SEMIS | Rule: no jump bigger than SEMIS semitones. |
+| HOME, STEPS | Rule: come back to the root. The pull grows until, STEPS steps after the last root, it is certain. |
+| KEEP / RECALL / SLOTS | Stores the tables, where each voice is and the knobs; a trigger at RECL brings the chosen slot back at the next step. |
+
+Each rule knob is "how often the rule is enforced": 0 never, full always.
+
+**Teaching it a melody.** Click the voice to teach. Patch the melody's pitch to PITCH and hold a gate at LEARN while that voice is being stepped in time with the melody. The voice counts which note follows which. Let go and it improvises in that style. Right-click, "Reset voice's table", to go back to CHAR.
+
+**Inputs.** ST 1 to 4 (step triggers). SCALE (a poly cable of pitches: those notes become the scale). ROOT (1 V/oct). LEARN and PITCH. CHAR (moves all four CHAR knobs). RESET (back to the root, and the same melody again). SEED, KEEP, RECL.
+
+**Outputs.** PITCH 1 to 4 and POLY (all four on one cable). GATE 1 to 4 (10 ms at each step). VIOL (a trigger when the rules could not all be met).
+
+**Right-click.** Reference voice. Which distances INTVL allows. Gates only when the note changes. Reset tables.
+
+**Three tips**
+1. One trigger into ST 1, POLY into FMX's V/OCT and the same trigger into FMX's TRIG: a four-note chord that reshuffles each step. Turn INTVL and CONTRA up and it starts to sound composed.
+2. Clock voice 1 slowly as a bass (CENTER -2, CHAR low, HOME at 70 %) and voice 2 fast above it with INTVL full: the top line dances but always lands on a third or sixth above the bass.
+3. Patch VIOL to something audible, or to MUTATE's MUTATE input: the moments where the rules collide become events.
+

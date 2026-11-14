@@ -1,7 +1,7 @@
 {
   "slug": "Codex",
   "name": "Codex",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "license": "GPL-3.0-or-later",
   "brand": "Haer",
   "author": "Haer",
@@ -105,6 +105,16 @@
         "Recording",
         "Polyphonic",
         "Utility"
+      ]
+    },
+    {
+      "slug": "Steer",
+      "name": "STEER",
+      "description": "Performance control: 8 macros that each move up to 16 parameters anywhere in the rack with their own range and curve, recordable macro gestures, 16 scenes that can launch VAULT clips, and a tree of whole-rack snapshots to morph between or wander through",
+      "tags": [
+        "Controller",
+        "Utility",
+        "Random"
       ]
     }
   ]

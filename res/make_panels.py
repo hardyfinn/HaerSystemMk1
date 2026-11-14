@@ -600,6 +600,57 @@ def vault():
     p.save()
 
 
+def steer():
+    p = Panel("Steer", 38, "STEER", VIOLET, "macros, scenes and a tree of versions")
+    p.screen("DISPLAY", 5.0, 15.0, 74.0, 44.0)
+
+    # eight macros: knob, MAP button, CV in; their outputs are at the bottom of the same columns
+    cx = [100.0 + i * 12.2 for i in range(8)]
+    lx = 83.5
+    for i, x in enumerate(cx):
+        p.label(str(i + 1), x, 20.5, fill=VIOLET)
+    p.place("MACRO", "small", [(x, 30.0) for x in cx])
+    p.place("MAP", "button", [(x, 42.0) for x in cx])
+    p.place("MAP_LIGHT", "light", [(x + 4.6, 38.2) for x in cx])
+    p.place("MACRO_IN", "jack", [(x, 54.0) for x in cx])
+    p.label("MACRO", lx, 31.1, anchor="start", jack=True)
+    p.label("MAP", lx, 43.1, anchor="start", jack=True)
+    p.label("CV", lx, 55.1, anchor="start", jack=True)
+    p.line(lx - 2.3, 17.0, lx - 2.3, 59.0)
+
+    # scenes and gestures
+    xa = [12.0 + i * 21.3 for i in range(9)]
+    knob_row(p, ROW_A, [("SCENE", "SCENE", xa[0]), ("TIME", "TIME", xa[1]), ("CURVE", "CURVE", xa[2])])
+    knob_row(p, ROW_A, [("GO", "GO", xa[3])], kind="button")
+    knob_row(p, ROW_A, [("REC", "REC", xa[4]), ("PLAY", "PLAY", xa[5])], kind="button")
+    p.place("REC_LIGHT", "light", (xa[4] + 5.0, ROW_A - 3.8))
+    p.place("PLAY_LIGHT", "light", (xa[5] + 5.0, ROW_A - 3.8))
+    knob_row(p, ROW_A, [("LOOSE", "LOOSE", xa[6]), ("SEED", "SEED", xa[7])])
+    knob_row(p, ROW_A, [("LINK", "LINK", xa[8])], kind="button")
+    p.place("LINK_LIGHT", "light", (xa[8] + 5.0, ROW_A - 3.8))
+    # the version tree
+    for name, label, x, kind in [("SNAP", "SNAP", xa[0], "button"), ("MORPH", "MORPH", xa[1], "knob"),
+                                 ("GOTO", "GO TO", xa[2], "button"), ("WALK", "WALK", xa[3], "knob"),
+                                 ("WALK_BARS", "BARS", xa[4], "knob")]:
+        p.place(name, kind, (x, ROW_B))
+        p.label(label, x, ROW_B - KNOB_LABEL, fill=VIOLET)
+    p.line(xa[3] + 5.6, ROW_B, xa[4] - 5.6, ROW_B, VIOLET)
+    p.note("TIME: BARS A CHANGE TAKES", xa[5] - 5.0, ROW_B - 2.0, anchor="start")
+    p.note("(SECONDS WITHOUT PHASE)", xa[5] - 5.0, ROW_B + 1.8, anchor="start")
+
+    ix = [11.0 + i * 13.3 for i in range(10)]
+    jack_row(p, JACKS_1, [("PHASE_IN", "PHASE", ix[0]), ("SCENE_IN", "SCENE", ix[1]), ("GO_IN", "GO", ix[2]),
+                          ("REC_IN", "REC", ix[3]), ("PLAY_IN", "PLAY", ix[4]), ("SEED_IN", "SEED", ix[5]),
+                          ("SNAP_IN", "SNAP", ix[6]), ("MORPH_IN", "MORPH", ix[7]), ("GOTO_IN", "GO TO", ix[8]),
+                          ("WALK_IN", "WALK", ix[9])])
+    p.outbox(ix[5] - 7.5, JACKS_2 - 9.2, p.w - 3.0 - (ix[5] - 7.5), 14.6)
+    jack_row(p, JACKS_2, [("CHANGED_OUT", "CHANGED", ix[5] + 2.0)], fill=VIOLET)
+    p.place("MACRO_OUT", "jack", [(x, JACKS_2) for x in cx])
+    for i, x in enumerate(cx):
+        p.label("M" + str(i + 1), x, JACKS_2 - JACK_LABEL_DY, jack=True, fill=VIOLET)
+    p.save()
+
+
 if __name__ == "__main__":
     warp()
     contour()
@@ -610,3 +661,4 @@ if __name__ == "__main__":
     splice()
     depth()
     vault()
+    steer()

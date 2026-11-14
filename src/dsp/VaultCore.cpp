@@ -1,5 +1,6 @@
 #include "dsp/VaultCore.hpp"
 #include "common/Rng.hpp"
+#include "common/MiniJson.hpp"
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
@@ -35,161 +36,19 @@ size_t countUpTo(const std::vector<VaultEvent>& ev, double x) {
 	return lo;
 }
 
-// ---------------------------------------------------------------- JSON text
-
-void putString(std::string& out, const std::string& s) {
-	out += '"';
-	for (unsigned char c : s) {
-		if (c == '"' || c == '\\') {
-			out += '\\';
-			out += (char)c;
-		}
-		else if (c < 0x20) {
-			char buf[8];
-			std::snprintf(buf, sizeof(buf), "\\u%04x", c);
-			out += buf;
-		}
-		else
-			out += (char)c;
-	}
-	out += '"';
-}
-
-void putNumber(std::string& out, double v, int digits) {
-	char buf[40];
-	std::snprintf(buf, sizeof(buf), "%.*g", digits, v);
-	out += buf;
-}
-
-// A reader for the JSON this file writes (and for the same data re-written by another JSON library).
-struct Reader {
-	const char* p;
-	const char* end;
-	bool ok = true;
-
-	void space() {
-		while (p < end && (*p == ' ' || *p == '\n' || *p == '\r' || *p == '\t'))
-			p++;
-	}
-	bool eat(char c) {
-		space();
-		if (p < end && *p == c) {
-			p++;
-			return true;
-		}
-		return false;
-	}
-	bool need(char c) {
-		if (!eat(c))
-			ok = false;
-		return ok;
-	}
-	double number() {
-		space();
-		char* stop = nullptr;
-		double v = std::strtod(p, &stop);
-		if (stop == p || stop > end)
-			ok = false;
-		else
-			p = stop;
-		return v;
-	}
-	std::string string() {
-		std::string s;
-		if (!need('"'))
-			return s;
-		while (p < end && *p != '"') {
-			char c = *p++;
-			if (c != '\\') {
-				s += c;
-				continue;
-			}
-			if (p >= end)
-				break;
-			char e = *p++;
-			switch (e) {
-				case 'n': s += '\n'; break;
-				case 't': s += '\t'; break;
-				case 'r': s += '\r'; break;
-				case 'b': s += '\b'; break;
-				case 'f': s += '\f'; break;
-				case 'u': {
-					if (end - p < 4) {
-						ok = false;
-						return s;
-					}
-					char hex[5] = {p[0], p[1], p[2], p[3], 0};
-					unsigned long cp = std::strtoul(hex, nullptr, 16);
-					p += 4;
-					if (cp < 0x80)
-						s += (char)cp;
-					else if (cp < 0x800) {
-						s += (char)(0xC0 | (cp >> 6));
-						s += (char)(0x80 | (cp & 0x3F));
-					}
-					else {
-						s += (char)(0xE0 | (cp >> 12));
-						s += (char)(0x80 | ((cp >> 6) & 0x3F));
-						s += (char)(0x80 | (cp & 0x3F));
-					}
-					break;
-				}
-				default: s += e; break; // \" \\ \/
-			}
-		}
-		if (p >= end)
-			ok = false;
-		else
-			p++; // closing quote
-		return s;
-	}
-	// step over any value
-	void skip() {
-		space();
-		if (p >= end) {
-			ok = false;
-			return;
-		}
-		if (*p == '"')
-			string();
-		else if (*p == '{' || *p == '[') {
-			char open = *p, close = open == '{' ? '}' : ']';
-			p++;
-			if (eat(close))
-				return;
-			do {
-				if (open == '{') {
-					string();
-					need(':');
-				}
-				skip();
-			} while (ok && eat(','));
-			need(close);
-		}
-		else if (!std::strncmp(p, "true", 4) && end - p >= 4)
-			p += 4;
-		else if (!std::strncmp(p, "false", 5) && end - p >= 5)
-			p += 5;
-		else if (!std::strncmp(p, "null", 4) && end - p >= 4)
-			p += 4;
-		else
-			number();
-	}
-};
-
 } // namespace
 
 std::string vaultClipToJson(const VaultClip& clip) {
 	std::string out;
 	out.reserve(64 + clip.eventCount() * 40);
 	out += "{\"name\":";
-	putString(out, clip.name);
+	minijson::putString(out, clip.name);
 	out += ",\"bars\":";
-	putNumber(out, clip.bars, 9);
+	minijson::putNumber(out, clip.bars, 9);
 	out += ",\"bpm\":";
-	putNumber(out, clip.bpm, 9);
+	minijson::putNumber(out, clip.bpm, 9);
 	out += ",\"beats\":";
-	putNumber(out, clip.beats, 9);
+	minijson::putNumber(out, clip.beats, 9);
 	out += ",\"time\":";
 	out += std::to_string((long long)clip.time);
 	out += ",\"node\":";
@@ -209,7 +68,7 @@ std::string vaultClipToJson(const VaultClip& clip) {
 				out += ',';
 			first = false;
 			out += '[';
-			putNumber(out, e.pos, 17);
+			minijson::putNumber(out, e.pos, 17);
 			out += ',';
 			out += std::to_string((int)e.lane);
 			out += ',';
@@ -217,7 +76,7 @@ std::string vaultClipToJson(const VaultClip& clip) {
 			out += ',';
 			out += std::to_string((int)e.type);
 			out += ',';
-			putNumber(out, e.value, 9);
+			minijson::putNumber(out, e.value, 9);
 			out += ']';
 		}
 	out += "]}";
@@ -225,7 +84,7 @@ std::string vaultClipToJson(const VaultClip& clip) {
 }
 
 bool vaultClipFromJson(const std::string& text, VaultClip& clip) {
-	Reader r{text.data(), text.data() + text.size()};
+	minijson::Reader r(text);
 	VaultClip c;
 	if (!r.need('{'))
 		return false;

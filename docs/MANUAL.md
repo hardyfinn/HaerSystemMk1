@@ -306,3 +306,38 @@ Each rule knob is "how often the rule is enforced": 0 never, full always.
 1. Patch MUTATE's GATES and VEL to lane 1 and CHAIN's GATE and PITCH to lane 2 with a stackable cable each, and leave them there. KEEP whenever something good goes by. You lose nothing by keeping too often: there are 64 slots.
 2. One clip, two lanes: play it on lane 1 as it is and on lane 2 with a window of 1/8 and THIN at 40 %. The second voice becomes a stuttering shadow of the first.
 3. END into a counter or straight into another lane's LAUNCH: clips that hand over to each other.
+
+## STEER: macros, scenes and a tree of versions (38 HP)
+
+**What it is for.** Playing the whole rack with a few controls. It has three layers. Macros: one knob moves many controls. Scenes: sixteen stored macro settings that can also start VAULT clips. Versions: snapshots of the whole rack that you can slide between, or let the patch wander among.
+
+**Screen.** The tree of versions. Each dot is a snapshot, joined to the one it was made from. The filled dot is where the rack is now; the ringed dot is the target; the thick line shows how far the morph has gone. The top line shows messages, and what to click while mapping or linking.
+
+| Control | What it does |
+|---|---|
+| MACRO 1 to 8 | The macro knobs. |
+| MAP 1 to 8 | Press, then click any control in the rack: the macro now moves it. |
+| SCENE | Chooses a scene, 1 to 16. |
+| GO | Recalls the scene: macros glide to its values, VAULT clips launch at the next bar. |
+| TIME | How long a scene change, GO TO or walk step takes: 0 to 32 bars. |
+| CURVE | The shape of that change: linear, slow start, fast start, S. |
+| REC | Hold to record the movements of armed macros (up to 16 bars). |
+| PLAY | Loops the recorded gestures. |
+| LOOSE | Lets the gestures drift in time, up to 1/16 bar. |
+| SEED | Seeds WALK and LOOSE. |
+| LINK | Press, then click a control on a VAULT or generator to link it (or unlink it). |
+| SNAP | Stores the rack as a new version under the current one. |
+| MORPH | Slides from the current version towards the target. |
+| GO TO | Moves to the target over TIME and stays there. |
+| WALK, BARS | Every BARS bars, the chance of moving to a neighbouring version. |
+
+**Inputs.** A CV per macro. PHASE. SCENE, GO. REC and PLAY gates. SEED. SNAP, MORPH, GO TO, WALK.
+
+**Outputs.** M1 to M8 (each macro as 0 to 10 V, so macros can also drive cables). CHANGED (a trigger when a scene is recalled).
+
+**Right-click.** Per macro: arm, clear gesture, and each mapping's range, response and removal. The chosen scene: store, VAULT launches, empty. Linked modules. What a snapshot stores. Delete the tree.
+
+**Three tips**
+1. Map one macro to WARP's DEPTH, MUTATE's AMOUNT and a DIST on DEPTH, with MUTATE's range set to 0 to 40 %: one knob from "tight and dry" to "loose and far away".
+2. Make three snapshots that differ a lot, set WALK to 50 % and BARS to 8, TIME to 4: the piece now changes by itself, but only between places you chose.
+3. M1 to M8 are ordinary CVs. Patch one to a filter outside Codex, and scenes and gestures reach modules that STEER has no mapping to.

@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.7.0, milestone M7 (2026-11-14)
+
+Performance.
+
+- **STEER** (38 HP): eight macros, each moving up to 16 parameters anywhere in the rack, with a range and response curve per mapping (linear, exponential, logarithmic, S, steps). Macro CV inputs and outputs. Macro gestures can be recorded against the bar and looped, with LOOSE for timing drift. Sixteen scenes store the macros and can launch clips on a linked VAULT; changes take TIME bars with a chosen curve. A version tree stores whole-rack snapshots: click one as the target and MORPH slides the rack towards it, GO TO moves there, WALK wanders between neighbouring versions.
+- 6 new unit tests (116 in all).
+
 ## 2.6.0, milestone M6 (2026-11-14)
 
 Generate, keep, perform.

@@ -21,7 +21,7 @@ The plugin is built in milestones (§15 of the spec). See [`CHANGELOG.md`](CHANG
 | M4 | CHAIN | built |
 | M5 | SPLICE + DEPTH | built |
 | M6 | VAULT + KEEP on all generators | built |
-| M7 | STEER | |
+| M7 | STEER | built |
 | M8 | FLOW + TUNE MAP | |
 | M9 | EAR | |
 | M10 | Polish, manual, patch recipes | |

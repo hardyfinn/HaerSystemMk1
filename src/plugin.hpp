@@ -15,3 +15,4 @@ extern Model* modelChain;
 extern Model* modelSplice;
 extern Model* modelDepth;
 extern Model* modelVault;
+extern Model* modelSteer;

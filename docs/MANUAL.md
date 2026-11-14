@@ -341,3 +341,63 @@ Each rule knob is "how often the rule is enforced": 0 never, full always.
 1. Map one macro to WARP's DEPTH, MUTATE's AMOUNT and a DIST on DEPTH, with MUTATE's range set to 0 to 40 %: one knob from "tight and dry" to "loose and far away".
 2. Make three snapshots that differ a lot, set WALK to 50 % and BARS to 8, TIME to 4: the piece now changes by itself, but only between places you chose.
 3. M1 to M8 are ordinary CVs. Patch one to a filter outside Codex, and scenes and gestures reach modules that STEER has no mapping to.
+
+## FLOW: a small fluid that moves the modulation (30 HP)
+
+**What it is for.** Slow, connected movement. A fluid swirls in a box; things you patch stir it, and eight probes read it. Because everything is one fluid, the probes move together the way leaves on a pond do: related, never identical, and still settling long after the last push.
+
+**Screen.** The dye, from grey to amber as it thickens, with arrows showing which way the fluid moves. The lettered circles are the four injectors, with a line for their direction. The numbered dots are the probes. The thin bar along the bottom is ENERGY. Drag an injector to move it (the way you drag sets its direction); click it to puff. Drag a probe to move it.
+
+| Control | What it does |
+|---|---|
+| VISC | Viscosity: how quickly motion smooths out and dies. |
+| DIFF | How quickly the dye spreads by itself. |
+| VORT | Keeps swirls alive. Higher is swirlier and longer-lasting. |
+| DECAY | How long the dye takes to fade to half: 0.1 to 60 s. |
+| SPEED | How fast time passes in the fluid. |
+| RATE | Steps per second, 5 to 200. Higher is smoother and costs more CPU. |
+| GAIN | Scales U, V and CURL. |
+| THRESH | Where PEAK fires on the ENERGY scale. |
+| SEED | The starting swirl. A new seed restarts the fluid. |
+| KEEP, RECALL | Store the fluid as it is now in a slot, and bring it back. |
+
+**Injector jacks (rows A to D).** X and Y: position, 0 to 10 V across and down. ANGLE: direction, 0 to 10 V is a full turn. FORCE: a steady push. DYE: steady dye. PUFF: a trigger gives a burst of push and dye at once.
+
+**Inputs.** PROBE X and PROBE Y (poly: channel 1 moves probe 1, and so on; mono moves them all). KEEP, RECALL.
+
+**Outputs.** DENSITY, U, V, CURL: 8 channels each, one per probe: dye (0 to 10 V), speed across and down (±5 V), swirl (±5 V). ENERGY: how much the whole fluid is moving (0 to 10 V). PEAK: a trigger when ENERGY rises past THRESH.
+
+**Right-click.** Walls (closed box or wraparound). Dye never fades. Puff an injector. Restart the fluid. Put probes and injectors back. Keep slots.
+
+**Three tips**
+1. MUTATE's ACCENT into PUFF A, DENSITY through a Split into STRIKE's MATERIAL CV and a DIST on DEPTH: every accent stirs the sound, which drifts for seconds before settling.
+2. VORT high, VISC at zero and "Dye never fades": one puff keeps the fluid turning for minutes.
+3. PEAK into VAULT's KEEP: the rack keeps the bars where things got lively.
+
+## TUNE MAP: fields that morph (18 HP)
+
+**What it is for.** Harmony that changes without changing key. Pitches are pulled into a field of allowed pitches, and the field itself glides from one tuning to another, so a melody can bend from 12-TET minor into the harmonic series without a single jump.
+
+**Screen.** One turn of the circle is one octave, with the root at the top. Field A's pitches are on the outer ring, field B's on the inner ring. The amber dots between are the field in use now (bigger = more weight; faint = too weak to be a target). Thin needles are the incoming pitches; short amber ticks are where they were sent. The middle shows how far the morph is. The top lines name fields A and B.
+
+| Control | What it does |
+|---|---|
+| FIELD A, FIELD B | The two fields, 1 to 16 (hover to see the name). |
+| MORPH | Glides from field A (0) to field B (100 %). |
+| HYST | Stops a pitch flicking between two targets: 0 to 50 cents. |
+| STRENGTH | 100 % snaps hard; less only pulls pitches towards the field. |
+| LEARN | Hold (or hold the gate) while a sound plays into AUDIO: its strongest partials become the LEARNED field. |
+
+**Fields.** 1 12-TET major, 2 12-TET minor, 3 pentatonic, 4 just major, 5 blue (7-limit), 6 harmonics 8-16, 7 harmonics 16-32, 8 Bohlen-Pierce, 9 slendro, 10 pelog, 11 19-TET subset, 12 cluster, 13 quarter-tone minor, 14 USER 1, 15 USER 2, 16 LEARNED. Fields 6 and 7 are different in every octave (they are slices of the harmonic series).
+
+**Inputs.** IN (poly pitch). ROOT (transposes the field). MORPH CV. FIELD A and FIELD B CV. AUDIO, LEARN gate.
+
+**Outputs.** OUT (poly pitch). CHANGED (a trigger per channel when its pitch moves to a new target). FIELD (the allowed pitches in the octave above the root, as a poly cable, e.g. for CHAIN's SCALE input or to play chords).
+
+**Right-click.** Which USER field a click on the circle edits; empty or fill a USER field. Click the circle to add a point (nearest 50 cents) or take one away; hold Ctrl or Cmd for any cent.
+
+**Three tips**
+1. CHAIN's pitch out through TUNE MAP into FMX, field A 12-TET minor, field B harmonics 16-32, and a very slow LFO on MORPH: the melodies bend into a glassy just tuning and back without stopping.
+2. Feed a drone to AUDIO and hold LEARN for a couple of seconds, then put LEARNED on field B and morph: the melody drifts into the drone's own partials.
+3. STRENGTH at 40 % and HYST at 0 on a slowly moving CV gives "magnetic" pitch that leans towards the field instead of stepping.
+

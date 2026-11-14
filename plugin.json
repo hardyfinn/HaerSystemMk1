@@ -1,7 +1,7 @@
 {
   "slug": "Codex",
   "name": "Codex",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "license": "GPL-3.0-or-later",
   "brand": "Haer",
   "author": "Haer",
@@ -115,6 +115,25 @@
         "Controller",
         "Utility",
         "Random"
+      ]
+    },
+    {
+      "slug": "Flow",
+      "name": "FLOW",
+      "description": "A small 2D fluid as a modulation source: four injectors stir it, eight probes read dye, speed and swirl",
+      "tags": [
+        "Random",
+        "Visual",
+        "Polyphonic"
+      ]
+    },
+    {
+      "slug": "TuneMap",
+      "name": "TUNE MAP",
+      "description": "Pulls pitch CV into harmonic fields (just, partial series, gamelan, Bohlen-Pierce...) and morphs one field into another so melodies bend without stopping",
+      "tags": [
+        "Quantizer",
+        "Polyphonic"
       ]
     }
   ]

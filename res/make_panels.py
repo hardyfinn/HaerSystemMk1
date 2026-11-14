@@ -651,6 +651,67 @@ def steer():
     p.save()
 
 
+def flow():
+    p = Panel("Flow", 30, "FLOW", AMBER, "a small fluid that moves the modulation")
+    p.screen("DISPLAY", 5.0, 15.0, 52.0, 52.0)
+
+    # four injectors, one row of jacks each
+    cols = (("X", "X"), ("Y", "Y"), ("ANG", "ANGLE"), ("FORCE", "FORCE"), ("DYE", "DYE"), ("PUFF", "PUFF"))
+    jx = [76.0 + i * 13.6 for i in range(6)]
+    jy = [28.5, 40.0, 51.5, 63.0]
+    for (name, label), x in zip(cols, jx):
+        p.label(label, x, 21.0, jack=True, fill=AMBER if name == "PUFF" else TEXT)
+        p.place(name + "_IN", "jack", [(x, y) for y in jy])
+    for letter, y in zip("ABCD", jy):
+        p.label(letter, 64.5, y + 1.2, fill=AMBER)
+
+    xs = [11.0 + i * 16.3 for i in range(9)]
+    y = 83.0
+    knob_row(p, y, [("VISC", "VISC", xs[0]), ("DIFF", "DIFF", xs[1]), ("VORT", "VORT", xs[2]), ("DECAY", "DECAY", xs[3]),
+                    ("SPEED", "SPEED", xs[4]), ("RATE", "RATE", xs[5]), ("GAIN", "GAIN", xs[6]),
+                    ("THRESH", "THRESH", xs[7]), ("SEED", "SEED", xs[8])])
+
+    jack_row(p, JACKS_1, [("PROBE_X_IN", "PROBE X", 11.0), ("PROBE_Y_IN", "PROBE Y", 28.0),
+                          ("KEEP_IN", None, 47.0), ("RECALL_IN", None, 75.0)])
+    p.place("KEEP", "button", (57.5, JACKS_1))
+    p.label("KEEP", 52.0, JACKS_1 - JACK_LABEL_DY, jack=True)
+    p.place("RECALL", "small", (86.5, JACKS_1))
+    p.label("RECALL", 80.5, JACKS_1 - JACK_LABEL_DY, jack=True)
+    slot_lights(p, 104.0, JACKS_1 - 0.5)
+
+    p.outbox(3.0, JACKS_2 - 9.2, p.w - 6.0, 14.6)
+    ox = [14.0 + i * 24.9 for i in range(6)]
+    jack_row(p, JACKS_2, [("DENS_OUT", "DENSITY", ox[0]), ("U_OUT", "U", ox[1]), ("V_OUT", "V", ox[2]),
+                          ("CURL_OUT", "CURL", ox[3]), ("ENERGY_OUT", "ENERGY", ox[4]), ("PEAK_OUT", "PEAK", ox[5])],
+             fill=AMBER)
+    p.save()
+
+
+def tunemap():
+    p = Panel("TuneMap", 18, "TUNE MAP", AMBER)
+    p.note("fields that morph", 9.5 + text_width("TUNE MAP", TITLE, spacing=0.14) + 3.0, 10.0, size=2.6, anchor="start")
+    p.screen("DISPLAY", 5.0, 15.0, 47.0, 47.0)
+
+    kx = [64.0, 80.0]
+    knob_row(p, 27.0, [("FIELD_A", "FIELD A", kx[0]), ("FIELD_B", "FIELD B", kx[1])])
+    knob_row(p, 47.0, [("MORPH", "MORPH", kx[0]), ("HYST", "HYST", kx[1])])
+    knob_row(p, 67.0, [("STRENGTH", "STRENGTH", 72.0)])
+
+    ix = [11.0, 28.0, 45.5, 63.0, 80.5]
+    jack_row(p, 89.0, [("IN_IN", "IN", ix[0]), ("ROOT_IN", "ROOT", ix[1]), ("MORPH_IN", "MORPH", ix[2]),
+                       ("FIELD_A_IN", "FIELD A", ix[3]), ("FIELD_B_IN", "FIELD B", ix[4])])
+    jack_row(p, JACKS_1, [("AUDIO_IN", "AUDIO", ix[0]), ("LEARN_IN", None, ix[1])])
+    p.place("LEARN", "button", (39.0, JACKS_1))
+    p.label("LEARN", 33.5, JACKS_1 - JACK_LABEL_DY, jack=True)
+    p.place("LEARN_LIGHT", "light", (46.0, JACKS_1))
+
+    p.outbox(3.0, JACKS_2 - 9.2, p.w - 6.0, 14.6)
+    ox = [15.0, 45.7, 76.4]
+    jack_row(p, JACKS_2, [("OUT_OUT", "OUT", ox[0]), ("CHANGED_OUT", "CHANGED", ox[1]), ("FIELD_OUT", "FIELD", ox[2])],
+             fill=AMBER)
+    p.save()
+
+
 if __name__ == "__main__":
     warp()
     contour()
@@ -662,3 +723,5 @@ if __name__ == "__main__":
     depth()
     vault()
     steer()
+    flow()
+    tunemap()

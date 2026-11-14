@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.8.0, milestone M8 (2026-11-14)
+
+Motion and harmony.
+
+- **FLOW** (30 HP): a small fluid (24 by 24 cells) as a modulation source. Four injectors push it and add dye, from CV or by dragging them on the screen; a click or a trigger puffs. Eight probes, dragged on the screen or moved by CV, read the dye, the speed across and down and the swirl where they sit, on four 8-channel outputs. ENERGY says how much the whole fluid is moving and PEAK fires when it rises past a threshold. Viscosity, diffusion, swirl strength, dye half-life, speed and step rate; closed box or wraparound. KEEP and RECALL store the fluid itself.
+- **TUNE MAP** (18 HP): pulls pitch CV into one of 16 harmonic fields (12-TET major and minor, pentatonic, just, 7-limit blue, two harmonic-series fields, Bohlen-Pierce, slendro, pelog, 19-TET, a cluster, quarter-tone minor, two fields you click in yourself, and one learned from audio). MORPH glides every pitch of field A to its nearest partner in field B. STRENGTH from gentle pull to hard quantise, hysteresis, ROOT, a CHANGED trigger per channel, and the field itself as a poly cable.
+- 13 new unit tests (129 in all).
+
 ## 2.7.0, milestone M7 (2026-11-14)
 
 Performance.

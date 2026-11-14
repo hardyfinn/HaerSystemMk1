@@ -184,3 +184,26 @@ Places where the build spec (`docs/design/03-build-instructions.md`) was ambiguo
 12. **WALK.** Every BARS bars a seeded dice roll decides whether to move, and to which neighbour (the parent or a child, all equally likely). A decision that falls while a move is still under way is skipped.
 13. **Screen.** Click a version to make it the target (click it again or click the current one to clear). Right-click a version to rename it, jump to it at once, or delete it (its children move up to its parent).
 14. **Labels.** MORPH_TIME, MORPH_CURVE, WALK_BARS, RECORD, SCENE_CHANGED and MACRO outputs are lettered TIME, CURVE, BARS, REC, CHANGED and M1 to M8.
+
+## M8: FLOW and TUNE MAP
+
+1. **Panel widths.** FLOW is 30 HP (spec: 14): 28 jacks for the four injectors alone, plus nine knobs and the screen. TUNE MAP is 18 HP (spec: 10).
+2. **FLOW injector pads are on the main screen.** The spec asks for four small XY pads; instead the injectors (lettered circles A to D) are dragged directly on the fluid screen, where you can see what they do. Click one without moving it to puff. The direction you drag it in becomes its direction of push. A patched X, Y or ANGLE overrides the screen.
+3. **FLOW with nothing patched** to FORCE and DYE injects nothing continuously; puffs still work at full strength. So an unpatched FLOW is quiet until stirred.
+4. **The pressure solve.** Stam's standard projection leaves about 1 % divergence on a grid this small; the spec's test asks for 0.1 %. FLOW solves pressure on the stencil that matches how divergence is measured, with up to 40 relaxation rounds (fewer at high RATE, where each step changes little). Moving dye about also loses a little to rounding, so the total dye is put back after each move; fading (DECAY) is applied after that.
+5. **CPU.** One step costs about 0.15 ms on a laptop core. At the default 60 steps a second that is under 1 % of a core, so steps run inside the audio thread without being spread out (the spec allows this below 0.5 ms).
+6. **Output scaling.** DENSITY: dye 1.0 = 10 V. U and V: speed x GAIN x 5 V, where speed 1 crosses the whole grid in a second. CURL: swirl x GAIN x 0.25 V. ENERGY: 10 V x E / (E + 0.05), so it approaches 10 V softly. PEAK has 0.2 V of hysteresis. V and CURL use screen directions: positive V is downwards, positive CURL is clockwise.
+7. **PROBE X and Y CV.** A poly cable moves one probe per channel (channels beyond the cable's count stay where they were dragged). A mono cable moves all eight probes together.
+8. **DECAY range** is 0.1 to 60 s as in the spec. "Dye never fades" is a right-click option, for the spec's DECAY infinity.
+9. **SEED** sets the starting swirl. Turning it restarts the fluid from that seed straight away. "Restart the fluid from SEED" in the right-click menu does the same without changing it.
+10. **FLOW's KEEP** stores the whole fluid (three 24 x 24 fields), the knobs, the probe and injector positions and the wall setting. Recall takes over at the next step.
+11. **TUNE MAP's partial-series fields.** "Harmonics 8-16" holds partials 1 to 15 of the root over 4 octaves, so the top octave is partials 8 to 16; "Harmonics 16-32" holds partials 2 to 31 (half-partials), so the top octave is partials 16 to 32. Both repeat every 4 octaves.
+12. **Every field is laid out over 4 octaves** for morphing, and that span repeats. For octave fields this changes nothing. Bohlen-Pierce (13 steps of 3:1) restarts on the root every 4 octaves, since 3:1 never meets an octave.
+13. **Field choices** where the spec only names a field: pelog 0, 120, 270, 540, 670, 785, 950 cents; slendro five steps of 240; 19-TET subset steps 0, 3, 6, 8, 11, 14, 17; quarter-tone minor 0, 150, 300, 500, 700, 800, 1000 (a Bayati-like scale). All weights are 1.
+14. **Pairing** joins the nearest free A-B pair first, then the next nearest, with no distance limit; unpaired points fade in or out where they stand.
+15. **USER fields.** Choose which one a click on the circle edits in the right-click menu (USER 1 by default). A click adds a point at the nearest 50 cents, or takes away a point within 20 cents; hold Ctrl (Cmd on a Mac) for any cent. USER 1 starts as all 12 semitones, USER 2 as a whole-tone scale.
+16. **LEARN** has a button as well as the gate input, so it can be held by hand. Learned pitches are pitch classes above C4 (0 V), so with ROOT at 0 V the field is in the drone's own key. Peaks quieter than 40 dB below the loudest are ignored, and peaks within 30 cents of a stronger one merge. Fewer than 8 pitches are learned when the sound has fewer clear partials.
+17. **FIELD A and B CV** add 1.5 fields per volt (so 0 to 10 V sweeps all 16). MORPH CV adds 10 % per volt.
+18. **An empty field** (an empty USER field, or LEARNED before anything is learned) lets pitches through unchanged.
+19. **FIELD output** lists the allowed pitches of the current morphed field in the octave above the root, low to high, up to 16.
+

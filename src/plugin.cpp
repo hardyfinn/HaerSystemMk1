@@ -14,4 +14,6 @@ void init(Plugin* p) {
 	p->addModel(modelDepth);
 	p->addModel(modelVault);
 	p->addModel(modelSteer);
+	p->addModel(modelFlow);
+	p->addModel(modelTuneMap);
 }

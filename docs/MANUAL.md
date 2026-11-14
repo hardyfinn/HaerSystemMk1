@@ -1,6 +1,6 @@
 # Codex manual
 
-One page per module will be added here as each milestone lands (final version at M10).
+One page per module, in the order they were built. Starter patches are in [PATCHES.md](PATCHES.md). Every knob and jack also explains itself when you hover over it in Rack.
 
 ## Signals used by every module
 
@@ -276,7 +276,7 @@ Each rule knob is "how often the rule is enforced": 0 never, full always.
 **Three tips**
 1. Drums close (DIST 10 %), bass a little back, melody further, a texture at 95 %: the mix gets depth without touching a fader.
 2. A slow LFO into DIST CV 1: the sound walks away and comes back, with a slight bend in pitch as it moves.
-3. Long DECAY, INSTAB up, then a gate into FREEZE at the peak: a held wall of sound to play over. STEER will later be able to ride INSTAB as a performance macro.
+3. Long DECAY, INSTAB up, then a gate into FREEZE at the peak: a held wall of sound to play over. Map INSTAB to a STEER macro to ride it as a performance control.
 
 ## VAULT: keep the good bars, play them later (40 HP)
 
@@ -425,4 +425,21 @@ Each rule knob is "how often the rule is enforced": 0 never, full always.
 1. A drum loop into IN A, WARP's PHASE 1 into PHASE. Hold LEARN for 2 bars, then clock MUTATE from GROOVE: MUTATE now plays with the loop's swing.
 2. Send the groove to WARP and set WARP's SHAPE to 4 and DEPTH up: now every module on WARP's clock has the feel, not just one.
 3. STRIKE's output into IN B and ONSET B into FLOW's PUFF or CHAIN's STEP: voices start reacting to each other.
+
+## Working with other plugins
+
+Codex works with VCV Fundamental alone, but these go well alongside it (spec §16). Plugin names change now and then; check the VCV Library if one is not found.
+
+| Module (plugin) | Use it for |
+|---|---|
+| Scope, Mix, VCA, Merge, Split, Quantizer (VCV Fundamental) | Looking at phases, mixing voices, splitting the poly outputs of MUTATE, VAULT and FLOW. |
+| MIDI-Map, MIDI-CC to CV (VCV Core) | Putting STEER's macro inputs on a hardware controller. |
+| Plaits, Rings, Elements (Audible Instruments) | More voices beside STRIKE and FMX. |
+| Texture Synthesizer (Audible Instruments) | A second, different granular stage after SPLICE. |
+| Plateau (Valley) | One huge space as a send beside DEPTH's placed sources. |
+| ChowTape (ChowDSP) | Tape grit and weight on the mix. |
+| Surge XT modules | More oscillators, waveshapers and effects. |
+| 8FACE mk2, STRIP (stoermelder PackOne) | Snapshots of modules outside STEER's scope. |
+| Clocked, Foundry (Impromptu Modular) | A straight clock or a classic sequencer to set against WARP's bending. |
+| Analyzer (Bogaudio) | Checking the spectra of STRIKE and FMX while tuning. |
 

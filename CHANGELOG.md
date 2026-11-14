@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.10.0, milestone M10 (2026-11-14)
+
+All 13 modules built.
+
+- `docs/PATCHES.md`: the four starter patches (Bent electro, Interference, Communicating voices, Keep then play) and a fifth using EAR and FLOW.
+- `docs/MANUAL.md` complete: one page per module and a list of other plugins that work well alongside.
+- `docs/TESTS.md`: listening tests for every milestone, to tick off in Rack.
+- CPU pass: every module measured (see `docs/DECISIONS.md`, M10).
+
 ## 2.9.0, milestone M9 (2026-11-14)
 
 Listening.

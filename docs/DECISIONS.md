@@ -222,3 +222,24 @@ Places where the build spec (`docs/design/03-build-instructions.md`) was ambiguo
 11. **Spline points** across Codex can now number 34 (was 16), so EAR's 32-step groove fits; WARP's own drawn shape still has 14 points.
 12. **CPU.** About 1.2 % of one core with both inputs and pitch running, measured on the build server.
 
+## M10: polish
+
+1. **CPU pass.** The sound engines measured on the build server (one core, 48 kHz, optimised build, without Rack's own overhead):
+
+   | Module and setting | CPU |
+   |---|---|
+   | WARP, DEPTH 50 %, drift on | 0.5 % |
+   | CONTOUR, HARM / MOIRE | 0.3 % / 0.5 % |
+   | STRIKE, 1 / 4 voices ringing | 0.1 % / 0.3 % |
+   | FMX, 1 / 4 voices | 0.4 % / 1.8 % |
+   | SPLICE, SMEAR 50 % | 0.4 % |
+   | DEPTH, 4 sources | 2.1 % |
+   | FLOW, 60 steps a second | 0.9 % |
+   | TUNE MAP, 8 channels while morphing | 1.1 % |
+   | EAR, both inputs and pitch | 1.2 to 1.5 % |
+
+   FMX with more than about 3 voices and DEPTH (which §11 gives 3 %) go over the general 1.5 % budget; the others are inside it. VAULT, STEER, MUTATE and CHAIN do little per sample and were not measured separately. Real numbers on a Mac will differ; Rack's own meter (Engine menu, CPU meter, or F3) shows them.
+2. **Plugin name.** Still "Codex" with slug "Codex". The spec asks for the final name and slug at M10; changing the slug later means saved patches stop finding the modules, so it should be settled before patches are kept.
+3. **Patch recipes** use only VCV Fundamental and Core besides Codex, so they work on any install. Where a recipe needs a steady voltage (FMX's bass note), any module that gives one will do.
+4. **TESTS.md** turns every "Haer's checklist" in the spec into steps with the panel's own names, grouped by milestone, plus a few checks for things added along the way.
+

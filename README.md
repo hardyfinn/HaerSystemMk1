@@ -24,7 +24,13 @@ The plugin is built in milestones (§15 of the spec). See [`CHANGELOG.md`](CHANG
 | M7 | STEER | built |
 | M8 | FLOW + TUNE MAP | built |
 | M9 | EAR | built |
-| M10 | Polish, manual, patch recipes | |
+| M10 | Polish, manual, patch recipes | built |
+
+## Documents
+
+- [`docs/MANUAL.md`](docs/MANUAL.md): one page per module.
+- [`docs/PATCHES.md`](docs/PATCHES.md): five starter patches.
+- [`docs/TESTS.md`](docs/TESTS.md): listening tests, one section per milestone.
 
 ## Installing a build
 

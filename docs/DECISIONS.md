@@ -147,3 +147,23 @@ Places where the build spec (`docs/design/03-build-instructions.md`) was ambiguo
 27. **MIX** at 50 % is equal parts direct sound and room (equal-power). WET L and WET R ignore MIX.
 28. **CV ranges.** DIST, INSTAB, MOD: 10 V = full range. SIZE and DECAY: 1 V doubles.
 29. **CPU.** About 2.5 % of one core on the build server with four sources and MOD up, inside §11's 3 % budget.
+
+## M6: VAULT
+
+1. **Panel width.** VAULT is 40 HP (spec: 20): 47 jacks, 8 launch buttons, 8 knobs and the clip screen with full-size labels. Each lane is one column: record inputs at the top, launch in the middle, play outputs at the bottom.
+2. **Which bars KEEP takes.** The whole bars before the bar you are in: press KEEP in bar 13 with BARS at 8 and the clip is bars 5 to 12. So a clip always starts and ends on bar lines and loops cleanly. Nothing waits for the current bar to finish.
+3. **A lane plays its own lane of a clip.** Playback lane 3 plays what was recorded on lane 3 of the chosen clip. Different lanes can play different clips at once.
+4. **Launch buttons.** The spec gives each lane a LAUNCH trigger; a button is added next to each jack so clips can be launched by hand. Double-clicking a full slot on the screen plays it on the chosen lane.
+5. **CLIP, THIN and TRANS** show and set the lane chosen with the LANE knob (or by clicking a lane on the screen); turning LANE moves the three knobs to that lane's values. Their CV inputs act on the chosen lane too. TRANS CV is 1 V per octave.
+6. **SEED** is a knob (§3.4), not in §12's list. THIN gives every note a fixed number from the seed; a note is left out when THIN is above its number. So raising THIN only ever removes more notes, and the same setting always gives the same sparse version.
+7. **CV is also stored at the start of every bar,** besides §12's "when it has moved 1 mV, at most every 1/384 bar". That makes every clip stand on its own: a pitch that was set long before the clip is still right.
+8. **A gate held across the start of a clip** starts again on the clip's first sample. When a clip wraps, all its gates drop for one sample, so a note that runs over the loop point is re-struck.
+9. **A new note on a gate that is still high** makes the gate drop for one sample first, so the note is heard.
+10. **REVERSE** plays note ends as note starts. **WINDOW** start and length are set in eighths and fractions from the lane's right-click menu.
+11. **Without PHASE** VAULT runs its own bar count from TEMPO and "Beats in a bar" (right-click, default 4). Plugging or unplugging PHASE starts the bar count again and empties the rolling recording (kept clips are untouched).
+12. **A stopped clock** means launches wait: they happen at a bar or beat line, and no line comes.
+13. **Clip numbers.** KEEP uses the lowest free slot. When all 64 are full, KEEP does nothing and the screen says so.
+14. **"Keep all"** is in the right-click menu. It stores the state of every Keepable module (WARP, CONTOUR, MUTATE, CHAIN, later FLOW) with the clip. "Recall linked states" in the clip's menu puts them back, at their next bar. If a module has been deleted since, it is skipped.
+15. **VAULT's own kept state** (for STEER) is which clip each lane plays and the lane settings, not the clips themselves.
+16. **clips.json** is written only when a clip changed, since it can be large. Each clip is also valid on its own as an exported file.
+17. **Deleting or initialising** while a clip plays stops that lane.

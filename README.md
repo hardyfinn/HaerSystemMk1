@@ -19,8 +19,8 @@ The plugin is built in milestones (§15 of the spec). See [`CHANGELOG.md`](CHANG
 | M2 | MUTATE | built |
 | M3 | STRIKE + FMX | built |
 | M4 | CHAIN | built |
-| M5 | SPLICE + DEPTH | built, waiting for Haer's check |
-| M6 | VAULT + KEEP on all generators | next |
+| M5 | SPLICE + DEPTH | built |
+| M6 | VAULT + KEEP on all generators | built |
 | M7 | STEER | |
 | M8 | FLOW + TUNE MAP | |
 | M9 | EAR | |

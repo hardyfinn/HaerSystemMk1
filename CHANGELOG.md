@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.6.0, milestone M6 (2026-11-14)
+
+Generate, keep, perform.
+
+- **VAULT** (40 HP): always records the last 64 bars of gates and CV on 8 lanes, as events measured in bars. KEEP copies the last 1 to 64 bars into one of 64 clip slots. Eight playback lanes launch clips on the next bar or beat; playback follows the current PHASE, so a kept clip bends with WARP. Per lane: THIN, TRANSPOSE, reverse, and a window that loops part of the clip. Clips are saved with the patch, can be renamed, duplicated, exported and imported. "Keep all" also stores the state of every generator, and a clip can put them back.
+- 11 new unit tests (110 in all).
+
 ## 2.5.0, milestone M5 (2026-11-14)
 
 Treatment and space.

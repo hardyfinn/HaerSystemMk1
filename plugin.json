@@ -1,7 +1,7 @@
 {
   "slug": "Codex",
   "name": "Codex",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "license": "GPL-3.0-or-later",
   "brand": "Haer",
   "author": "Haer",
@@ -94,6 +94,17 @@
         "Reverb",
         "Mixer",
         "Effect"
+      ]
+    },
+    {
+      "slug": "Vault",
+      "name": "VAULT",
+      "description": "Rolling capture and clip launcher for gates and CV: always records the last 64 bars of 8 lanes, KEEP copies the last bars into one of 64 clips, and clips play back following the current clock, thinned, transposed, reversed or windowed",
+      "tags": [
+        "Sequencer",
+        "Recording",
+        "Polyphonic",
+        "Utility"
       ]
     }
   ]

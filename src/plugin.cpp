@@ -12,4 +12,5 @@ void init(Plugin* p) {
 	p->addModel(modelChain);
 	p->addModel(modelSplice);
 	p->addModel(modelDepth);
+	p->addModel(modelVault);
 }

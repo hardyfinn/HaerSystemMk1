@@ -556,6 +556,50 @@ def depth():
     p.save()
 
 
+def vault():
+    p = Panel("Vault", 40, "VAULT", VIOLET, "keep the good bars, play them later")
+    p.screen("DISPLAY", 5.0, 15.0, 80.0, 44.0)
+
+    xs = [13.0 + i * 16.5 for i in range(5)]
+    knob_row(p, ROW_A, [("TEMPO", "TEMPO", xs[0]), ("BARS", "BARS", xs[1])])
+    knob_row(p, ROW_A, [("KEEP", "KEEP", xs[2])], kind="button")
+    knob_row(p, ROW_A, [("SEED", "SEED", xs[4])])
+    # these four act on one playback lane
+    for name, label, x in [("LANE", "LANE", xs[0]), ("CLIP", "CLIP", xs[1]), ("THIN", "THIN", xs[2]),
+                           ("TRANSPOSE", "TRANS", xs[3])]:
+        p.place(name, "knob", (x, ROW_B))
+        p.label(label, x, ROW_B - KNOB_LABEL, fill=VIOLET)
+    p.line(xs[0] + 5.6, ROW_B, xs[1] - 5.6, ROW_B, VIOLET)
+    p.note("FOR THAT", xs[4] - 7.0, ROW_B - 2.0, anchor="start", fill=VIOLET)
+    p.note("LANE", xs[4] - 7.0, ROW_B + 1.8, anchor="start", fill=VIOLET)
+
+    ix = [11.0 + i * 13.6 for i in range(6)]
+    jack_row(p, JACKS_1, [("PHASE_IN", "PHASE", ix[0]), ("KEEP_IN", "KEEP", ix[1]), ("CLIP_IN", "CLIP", ix[2]),
+                          ("THIN_IN", "THIN", ix[3]), ("TRANSPOSE_IN", "TRANS", ix[4]), ("STOP_IN", "STOP", ix[5])])
+
+    # one column per lane: record inputs, launch, play outputs
+    cx = [108.0 + i * 12.2 for i in range(8)]
+    lx = 89.0
+    for i, x in enumerate(cx):
+        p.label(str(i + 1), x, 21.5, fill=VIOLET)
+    p.outbox(lx - 2.0, JACKS_1 - 6.2, p.w - 3.0 - (lx - 2.0), 26.6)
+    p.outbox(ix[5] - 7.5, JACKS_2 - 9.2, 15.0, 14.6)
+    jack_row(p, JACKS_2, [("END_OUT", "END", ix[5])], fill=VIOLET)
+    rows = [("GATE_IN", "jack", 31.0, "GATE", TEXT), ("CV_IN", "jack", 45.0, "CV", TEXT),
+            ("LAUNCH", "button", 57.5, "LAUNCH", TEXT), ("LAUNCH_IN", "jack", 68.5, "", TEXT),
+            ("PLAY_LIGHT", "light", 82.0, "PLAYING", TEXT),
+            ("GATE_OUT", "jack", JACKS_1 + 1.0, "GATE", VIOLET), ("CV_OUT", "jack", JACKS_2, "CV", VIOLET)]
+    for name, kind, y, label, fill in rows:
+        p.place(name, kind, [(x, y) for x in cx])
+        if label:
+            p.label(label, lx, y + 1.1, anchor="start", jack=True, fill=fill)
+    p.note("RECORD IN", lx, 24.0, anchor="start")
+    p.note("TRIGGER", lx, 69.4, anchor="start")
+    p.note("PLAY OUT", lx, JACKS_1 - 8.0, anchor="start", fill=VIOLET)
+    p.line(lx - 2.5, 17.0, lx - 2.5, 94.0)
+    p.save()
+
+
 if __name__ == "__main__":
     warp()
     contour()
@@ -565,3 +609,4 @@ if __name__ == "__main__":
     chain()
     splice()
     depth()
+    vault()

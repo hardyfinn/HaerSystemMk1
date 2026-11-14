@@ -277,3 +277,32 @@ Each rule knob is "how often the rule is enforced": 0 never, full always.
 1. Drums close (DIST 10 %), bass a little back, melody further, a texture at 95 %: the mix gets depth without touching a fader.
 2. A slow LFO into DIST CV 1: the sound walks away and comes back, with a slight bend in pitch as it moves.
 3. Long DECAY, INSTAB up, then a gate into FREEZE at the peak: a held wall of sound to play over. STEER will later be able to ride INSTAB as a performance macro.
+
+## VAULT: keep the good bars, play them later (40 HP)
+
+**What it is for.** The generators never play the same thing twice, so VAULT remembers for you. It records gates and CV (not audio) from up to eight sources all the time, keeping the last 64 bars. Press KEEP when you hear something good and the last few bars become a clip. Later, patch VAULT's outputs to the voices in place of the generators and launch clips like a clip launcher. Clips are stored in bars, not seconds, so they follow WARP's tempo and bending as it is now.
+
+**Screen.** Left: the 64 clip slots. Dark = empty, lit = full, pulsing = playing. Click to select, double-click to play on the chosen lane, right-click for the clip's menu. Right: the eight lanes with the clip each is playing, a clip in brackets if one is chosen but not launched, ">07" when clip 7 is waiting for the bar line, and a bar showing progress through the clip. Click a lane to choose it.
+
+| Control | What it does |
+|---|---|
+| TEMPO | The tempo when nothing is patched to PHASE. |
+| BARS | How many bars KEEP takes: 1, 2, 4, 8, 16, 32 or 64. |
+| KEEP | Copies the last BARS whole bars into the next free slot. |
+| SEED | Which notes THIN removes. |
+| LANE | Chooses the lane that the next three knobs show and set. |
+| CLIP | The clip this lane will play at its next launch. 0 = stop. |
+| THIN | Leaves out notes: 0 = all there, full = none. |
+| TRANS | Transposes the lane's CV by up to two octaves, if the lane is marked as pitch. |
+| LAUNCH 1 to 8 | Starts the lane's chosen clip at the next bar (or beat). |
+
+**Inputs.** PHASE. KEEP. CLIP, THIN and TRANS CVs for the chosen lane. STOP (all lanes, at once). Per lane: GATE and CV to record (poly), LAUNCH trigger.
+
+**Outputs.** Per lane: GATE and CV (poly, as recorded). END (poly: channel 3 fires when lane 3's clip wraps).
+
+**Right-click.** Keep all. The selected clip: rename, play, duplicate, export, import, recall linked states, delete. Launch on the bar or on the beat. Beats in a bar. Per lane: CV is pitch, reverse, window start and length, stop.
+
+**Three tips**
+1. Patch MUTATE's GATES and VEL to lane 1 and CHAIN's GATE and PITCH to lane 2 with a stackable cable each, and leave them there. KEEP whenever something good goes by. You lose nothing by keeping too often: there are 64 slots.
+2. One clip, two lanes: play it on lane 1 as it is and on lane 2 with a window of 1/8 and THIN at 40 %. The second voice becomes a stuttering shadow of the first.
+3. END into a counter or straight into another lane's LAUNCH: clips that hand over to each other.

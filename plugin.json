@@ -1,0 +1,151 @@
+{
+  "slug": "Codex",
+  "name": "Codex",
+  "version": "2.10.0",
+  "license": "GPL-3.0-or-later",
+  "brand": "Haer",
+  "author": "Haer",
+  "authorEmail": "",
+  "authorUrl": "",
+  "pluginUrl": "",
+  "manualUrl": "",
+  "sourceUrl": "https://github.com/hardyfinn/HaerSystemMk1",
+  "donateUrl": "",
+  "changelogUrl": "",
+  "modules": [
+    {
+      "slug": "Warp",
+      "name": "WARP",
+      "description": "Curved master clock: tempo that drifts, bars that bend, four related phase outputs",
+      "tags": [
+        "Clock generator",
+        "Random"
+      ]
+    },
+    {
+      "slug": "Contour",
+      "name": "CONTOUR",
+      "description": "Rhythms where a curve crosses levels, with an 8-phasor interference source. Runs from a phase ramp or free, up to audio rate",
+      "tags": [
+        "Sequencer",
+        "Clock generator",
+        "Polyphonic"
+      ]
+    },
+    {
+      "slug": "Mutate",
+      "name": "MUTATE",
+      "description": "8-track step drum sequencer that writes its own patterns and slowly rewrites them: ratchets, micro-timing, conditions, per-step sound locks, polymeter",
+      "tags": [
+        "Sequencer",
+        "Drum",
+        "Random",
+        "Polyphonic"
+      ]
+    },
+    {
+      "slug": "Strike",
+      "name": "STRIKE",
+      "description": "Modal percussion: 32 tuned resonators that morph from wood to rubber, metal, glass and drum skin, plus a vowel (formant) mode. Up to 8 voices",
+      "tags": [
+        "Drum",
+        "Physical modeling",
+        "Polyphonic",
+        "Synth voice"
+      ]
+    },
+    {
+      "slug": "Fmx",
+      "name": "FMX",
+      "description": "Four-operator FM voice whose loudness and brightness follow a phase ramp or a trigger, up to audio-rate retriggering. Up to 8 voices",
+      "tags": [
+        "Synth voice",
+        "Oscillator",
+        "Polyphonic"
+      ]
+    },
+    {
+      "slug": "Chain",
+      "name": "CHAIN",
+      "description": "Four melody voices that pick each note from a table of likely next notes, with harmony rules between them (stay in key, thirds and sixths, contrary motion, no parallels, leap limit, pull to the root). Tables can be learned from a melody or painted",
+      "tags": [
+        "Sequencer",
+        "Random",
+        "Quantizer",
+        "Polyphonic"
+      ]
+    },
+    {
+      "slug": "Splice",
+      "name": "SPLICE",
+      "description": "Cut-up and smear buffer: 16 seconds of stereo tape that stutters the slice that has just gone by, with repeats that speed up, change pitch, reverse and fade, or dissolve into grains",
+      "tags": [
+        "Sampler",
+        "Granular",
+        "Delay",
+        "Effect"
+      ]
+    },
+    {
+      "slug": "Depth",
+      "name": "DEPTH",
+      "description": "Reverb that places four stereo sources at different distances in one room: each gets its own pre-delay, air loss and early reflections, and all share a tail that can freeze or bloom",
+      "tags": [
+        "Reverb",
+        "Mixer",
+        "Effect"
+      ]
+    },
+    {
+      "slug": "Vault",
+      "name": "VAULT",
+      "description": "Rolling capture and clip launcher for gates and CV: always records the last 64 bars of 8 lanes, KEEP copies the last bars into one of 64 clips, and clips play back following the current clock, thinned, transposed, reversed or windowed",
+      "tags": [
+        "Sequencer",
+        "Recording",
+        "Polyphonic",
+        "Utility"
+      ]
+    },
+    {
+      "slug": "Steer",
+      "name": "STEER",
+      "description": "Performance control: 8 macros that each move up to 16 parameters anywhere in the rack with their own range and curve, recordable macro gestures, 16 scenes that can launch VAULT clips, and a tree of whole-rack snapshots to morph between or wander through",
+      "tags": [
+        "Controller",
+        "Utility",
+        "Random"
+      ]
+    },
+    {
+      "slug": "Flow",
+      "name": "FLOW",
+      "description": "A small 2D fluid as a modulation source: four injectors stir it, eight probes read dye, speed and swirl",
+      "tags": [
+        "Random",
+        "Visual",
+        "Polyphonic"
+      ]
+    },
+    {
+      "slug": "TuneMap",
+      "name": "TUNE MAP",
+      "description": "Pulls pitch CV into harmonic fields (just, partial series, gamelan, Bohlen-Pierce...) and morphs one field into another so melodies bend without stopping",
+      "tags": [
+        "Quantizer",
+        "Polyphonic"
+      ]
+    },
+    {
+      "slug": "Ear",
+      "name": "EAR",
+      "description": "Listens to two audio inputs (onsets, loudness, brightness, noisiness, pitch) and learns the groove of a loop as a phase curve that can be sent to WARP",
+      "tags": [
+        "Envelope follower",
+        "Tuner",
+        "Clock modulator",
+        "Visual"
+      ]
+    }
+  ]
+}

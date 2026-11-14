@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.9.0, milestone M9 (2026-11-14)
+
+Listening.
+
+- **EAR** (28 HP): listens to two audio inputs. For each: ONSET triggers with the STRENGTH of each hit, LOUDNESS, brightness (CENTROID) and NOISINESS; for input A also PITCH and how sure it is. Hold LEARN while a loop plays against WARP's phase and EAR learns where its hits fall against a 8 to 32 step grid. GROOVE puts that feel onto the phase, from straight to fully grooved; anything clocked from it plays with the loop's timing. "Send groove to WARP" copies the groove into WARP's drawn shape. Screen with the groove, the bar and onset lights.
+- WARP accepts a groove from EAR.
+- 4 new unit tests (133 in all).
+
 ## 2.8.0, milestone M8 (2026-11-14)
 
 Motion and harmony.

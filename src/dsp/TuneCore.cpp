@@ -1,4 +1,5 @@
 #include "dsp/TuneCore.hpp"
+#include "common/Fft.hpp"
 #include <algorithm>
 #include <cmath>
 #include <cstring>
@@ -263,36 +264,7 @@ int TuneQuantiser::firstOctave(float* out, int max) const {
 
 // ---- learning ----
 
-void tuneFft(float* re, float* im, int n) {
-	for (int i = 1, j = 0; i < n; i++) {
-		int bit = n >> 1;
-		for (; j & bit; bit >>= 1)
-			j ^= bit;
-		j ^= bit;
-		if (i < j) {
-			std::swap(re[i], re[j]);
-			std::swap(im[i], im[j]);
-		}
-	}
-	for (int len = 2; len <= n; len <<= 1) {
-		double ang = -2.0 * M_PI / len;
-		float wr = (float)std::cos(ang), wi = (float)std::sin(ang);
-		for (int i = 0; i < n; i += len) {
-			float cr = 1.f, ci = 0.f;
-			for (int k = 0; k < len / 2; k++) {
-				int a = i + k, b = i + k + len / 2;
-				float tr = re[b] * cr - im[b] * ci, ti = re[b] * ci + im[b] * cr;
-				re[b] = re[a] - tr;
-				im[b] = im[a] - ti;
-				re[a] += tr;
-				im[a] += ti;
-				float nr = cr * wr - ci * wi;
-				ci = cr * wi + ci * wr;
-				cr = nr;
-			}
-		}
-	}
-}
+void tuneFft(float* re, float* im, int n) { fft(re, im, n); }
 
 TuneLearner::TuneLearner() {
 	// Blackman window: its side lobes are low enough that only real partials count as peaks

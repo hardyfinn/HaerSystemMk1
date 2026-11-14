@@ -16,4 +16,5 @@ void init(Plugin* p) {
 	p->addModel(modelSteer);
 	p->addModel(modelFlow);
 	p->addModel(modelTuneMap);
+	p->addModel(modelEar);
 }

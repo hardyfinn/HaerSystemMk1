@@ -4,6 +4,7 @@
 #include "modules/WarpLayout.hpp"
 #include "dsp/WarpCore.hpp"
 #include "common/KeepHost.hpp"
+#include "common/GrooveTarget.hpp"
 #include "common/StateSwap.hpp"
 #include "common/Theme.hpp"
 #include "widgets/CurveDisplay.hpp"
@@ -32,7 +33,7 @@ static int nearestRatio(float log2Ratio) {
 	return best;
 }
 
-struct Warp : Module, Keepable {
+struct Warp : Module, Keepable, GrooveTarget {
 	enum ParamId {
 		BPM_PARAM, BEATS_PARAM, DRIFT_PARAM, PERIOD_PARAM, SHAPE_PARAM, DEPTH_PARAM,
 		ENUMS(RATIO_PARAM, 4), ENUMS(OFFSET_PARAM, 4), ENUMS(FOLLOW_PARAM, 4),
@@ -346,6 +347,18 @@ struct Warp : Module, Keepable {
 	}
 
 	std::string keepLabel() override { return string::f("WARP #%lld", (long long)id); }
+
+	// From EAR: the learned groove becomes the drawn shape (SHAPE 4).
+	void receiveGroove(const float* xs, const float* ys, int count) override {
+		int n = clamp(count, 1, (int)WarpCore::DRAWN_MAX);
+		for (int i = 0; i < n; i++) {
+			drawnX[i] = count > 0 ? clamp(xs[i], 0.f, 1.f) : 0.5f;
+			drawnY[i] = count > 0 ? clamp(ys[i], 0.f, 1.f) : 0.5f;
+		}
+		drawnCount = n;
+		drawnVersion++;
+	}
+	std::string grooveLabel() override { return keepLabel(); }
 
 	json_t* drawnToJson() {
 		json_t* d = json_array();

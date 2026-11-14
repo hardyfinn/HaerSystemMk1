@@ -712,6 +712,39 @@ def tunemap():
     p.save()
 
 
+def ear():
+    p = Panel("Ear", 28, "EAR", VIOLET, "listening and groove capture")
+    p.screen("DISPLAY", 5.0, 15.0, 56.0, 40.0)
+
+    kx = [76.0, 94.0, 112.0, 130.0]
+    knob_row(p, 27.0, [("SENS", "SENS", kx[0]), ("GRID", "GRID", kx[1]), ("BARS", "BARS", kx[2]),
+                       ("AMT", "GROOVE", kx[3])])
+    p.place("LEARN", "button", (kx[0], 48.0))
+    p.label("LEARN", kx[0], 48.0 - KNOB_LABEL)
+    p.place("LEARN_LIGHT", "light", (kx[0] + 6.0, 48.0))
+    p.note("hold LEARN for BARS bars, then let go", 108.0, 49.0, anchor="middle")
+
+    ix = [12.0, 29.0, 46.0, 63.0, 80.0]
+    jack_row(p, 70.0, [("IN_A", "IN A", ix[0]), ("IN_B", "IN B", ix[1]), ("PHASE_IN", "PHASE", ix[2]),
+                       ("LEARN_IN", "LEARN", ix[3]), ("SENS_IN", "SENS", ix[4])])
+    p.outbox(117.0, 61.0, 22.0, 14.6)
+    jack_row(p, 70.0, [("GROOVE_OUT", "GROOVE", 128.0)], fill=VIOLET)
+
+    cols = [("ONSET", "ONSET"), ("STRENGTH", "STRENGTH"), ("LOUD", "LOUD"), ("CENTROID", "CENTROID"),
+            ("NOISE", "NOISE"), ("PITCH", "PITCH"), ("CONF", "CONF")]
+    cx = [20.0 + i * 18.5 for i in range(7)]
+    ra, rb = 98.0, 116.0
+    p.outbox(3.0, ra - 15.0, p.w - 6.0, rb - ra + 21.5)
+    for (name, label), x in zip(cols, cx):
+        p.label(label, x, ra - JACK_LABEL_DY, jack=True, fill=VIOLET)
+        p.place(name + "_A", "jack", (x, ra))
+        if name not in ("PITCH", "CONF"):
+            p.place(name + "_B", "jack", (x, rb))
+    p.label("A", 7.5, ra + 1.2, fill=VIOLET)
+    p.label("B", 7.5, rb + 1.2, fill=VIOLET)
+    p.save()
+
+
 if __name__ == "__main__":
     warp()
     contour()
@@ -725,3 +758,4 @@ if __name__ == "__main__":
     steer()
     flow()
     tunemap()
+    ear()

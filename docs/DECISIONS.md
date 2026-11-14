@@ -207,3 +207,18 @@ Places where the build spec (`docs/design/03-build-instructions.md`) was ambiguo
 18. **An empty field** (an empty USER field, or LEARNED before anything is learned) lets pitches through unchanged.
 19. **FIELD output** lists the allowed pitches of the current morphed field in the octave above the root, low to high, up to 16.
 
+## M9: EAR
+
+1. **Panel width.** EAR is 28 HP (spec: 12): 13 outputs, 5 inputs, 4 knobs, the LEARN button and a screen with full-size labels. Outputs are in two rows, A above B, under one set of column names.
+2. **A screen** (not in §13B) shows the groove curve against the grid, where the bar is now, the pitch of A and a light for each input's onsets. It is how you see that learning worked.
+3. **Levels.** Audio is read with ±5 V as full scale. LOUD maps -60 to 0 dB onto 0 to 10 V; a full-level sine reads about 9.5 V.
+4. **Onsets.** The adaptive threshold is the median of the last 16 flux values times SENS, plus a small fixed floor so that silence and hiss never fire. The FFT is Codex's own (Rack's `dsp::RealFFT` would tie the analysis to Rack and stop it being unit tested); it is a 512-point transform with a hop of 128 as specified. STRENGTH is how far the hit cleared the threshold: just over it is near 0 V, ten times over is 9 V.
+5. **Timing of a learned hit.** The ONSET trigger comes up to about 3 ms after the hit (one hop). For groove learning that is not good enough, so EAR looks back over the newest audio for where the hit actually started and reads the phase at that sample.
+6. **Pitch** is YIN with a 2048-sample buffer (window 1024, so the lowest pitch is about 47 Hz at 48 kHz). A new reading comes every 2048 samples (about 43 ms at 48 kHz) to keep EAR inside its CPU budget.
+7. **SENS CV** adds 0.3 per volt. **BARS** and **GRID** are knobs with the spec's steps (1, 2, 4, 8 bars; 8, 12, 16, 24, 32 steps), and **GROOVE** is §13B's GROOVE_AMT.
+8. **Learning.** LEARN (button or gate) needs a cable in PHASE. Hits are recorded from the moment LEARN goes high for BARS bars; letting go builds the curve (letting go early uses what was heard so far). Hits nearest a downbeat are not used: the ends of the curve are fixed at the bar line. A take with no hits leaves the old groove alone.
+9. **Number of points.** EAR keeps one point for every grid step that had hits, up to 31 on a 32-step grid, rather than §13B's 6 to 16: a swung 16th grid alone needs 15. WARP's drawn shape holds 14, so "send groove to WARP" drops the points that matter least (those a straight line between their neighbours already passes closest to). On grids up to 16 with a swing that keeps the swung steps.
+10. **Send groove to WARP.** Choose the WARP in "Link to WARP" in the right-click menu; with only one WARP in the rack it is used without linking. The groove goes into WARP's drawn shape; WARP plays it when its SHAPE knob is at 4 (drawn) and DEPTH is up. EAR does not turn WARP's knobs for you. The link is saved by module id and, as with STEER, is not renumbered when modules are copied.
+11. **Spline points** across Codex can now number 34 (was 16), so EAR's 32-step groove fits; WARP's own drawn shape still has 14 points.
+12. **CPU.** About 1.2 % of one core with both inputs and pitch running, measured on the build server.
+

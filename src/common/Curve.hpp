@@ -13,7 +13,7 @@ float scurve(float p, float k);
 // A monotone cubic spline (Fritsch-Carlson) through 2 to 16 points.
 // Where the points rise, the curve never dips between them.
 struct Spline {
-	static const int MAX = 16;
+	static const int MAX = 34; // enough for EAR's groove on a 32-step grid, plus the two ends
 	int n = 2;
 	float x[MAX] = {0.f, 1.f};
 	float y[MAX] = {0.f, 1.f};

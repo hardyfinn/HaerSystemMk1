@@ -401,3 +401,28 @@ Each rule knob is "how often the rule is enforced": 0 never, full always.
 2. Feed a drone to AUDIO and hold LEARN for a couple of seconds, then put LEARNED on field B and morph: the melody drifts into the drone's own partials.
 3. STRENGTH at 40 % and HYST at 0 on a slowly moving CV gives "magnetic" pitch that leans towards the field instead of stepping.
 
+## EAR: listening and groove capture (28 HP)
+
+**What it is for.** Letting the patch hear itself. EAR turns sound into triggers and CVs (hits, loudness, brightness, noisiness, pitch), so modules can react to what other modules play, not only to the shared clock. It also learns the timing feel of any loop and turns it into a bent phase.
+
+**Screen.** The groove over one bar: the grey diagonal is straight time, the violet curve is the learned feel (above the line = that part of the bar is played late). The vertical lines are the grid; the moving line is where the bar is now. The bottom line shows the pitch of A, or how many hits were heard while learning. The two lights flash on onsets at A and B.
+
+| Control | What it does |
+|---|---|
+| SENS | How clear a hit must be to count: higher hears fewer, stronger hits. |
+| GRID | The grid the groove is measured against: 8, 12, 16, 24 or 32 steps in a bar. |
+| BARS | How many bars to learn from: 1, 2, 4 or 8. |
+| GROOVE | From straight time (0) to the full learned feel. |
+| LEARN | Hold while the loop plays (or hold the LEARN gate high); let go to build the groove. |
+
+**Inputs.** IN A, IN B (audio). PHASE (a bar ramp, e.g. WARP's PHASE 1). LEARN gate. SENS CV.
+
+**Outputs, for A and for B.** ONSET (a trigger per hit). STRENGTH (how hard the last hit was, held). LOUD (loudness, 0 to 10 V). CENTROID (brightness, 1 V per octave). NOISE (0 V for a pure tone up to 10 V for noise). **For A only:** PITCH (1 V/oct, held while unsure) and CONF (how sure, 0 to 10 V). **GROOVE:** PHASE bent by the learned feel.
+
+**Right-click.** Send groove to WARP. Link to WARP (which WARP gets it, when there is more than one). Forget the groove.
+
+**Three tips**
+1. A drum loop into IN A, WARP's PHASE 1 into PHASE. Hold LEARN for 2 bars, then clock MUTATE from GROOVE: MUTATE now plays with the loop's swing.
+2. Send the groove to WARP and set WARP's SHAPE to 4 and DEPTH up: now every module on WARP's clock has the feel, not just one.
+3. STRIKE's output into IN B and ONSET B into FLOW's PUFF or CHAIN's STEP: voices start reacting to each other.
+

@@ -18,3 +18,4 @@ extern Model* modelVault;
 extern Model* modelSteer;
 extern Model* modelFlow;
 extern Model* modelTuneMap;
+extern Model* modelEar;
